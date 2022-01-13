@@ -3,3 +3,7 @@
 ### 2022. 01. 12 Start
 
 ### Study Js for Frontend Developer
+
+Visual Studio Code
+
+Extension : Code Runner, Live Server
