@@ -336,3 +336,11 @@ console.log(index); // 2
 console.log(string.indexOf("l")); // 2
 
 //
+
+console.log(2 * "10");
+
+//
+
+console.log("Yun" && "Hyeok"); // output : "Hyeok"
+
+console.log("Yun" || "Hyeok"); // Output : "Yun"
