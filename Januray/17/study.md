@@ -853,3 +853,312 @@ console.log(MYAPP.student.name); // MYAPP is not defined
 ```
 
 ======================================================================================================
+
+### strict mode
+
+```
+function foo() {
+  x = 10;
+}
+
+console.log(x); // 10
+```
+
+foo 함수 내에서 선언하지 않은 변수 x에 값 10을 할당하였다.
+이 때, 변수 x를 찾아야 x에 값을 할당할 수 있기 때문에 자바스크립트 엔진은 변수 x가 어디에서 선언되었는지 스코프 체인을 통해 검색하기 시작한다.
+
+자바스크립트 엔진은 먼저 foo 함수의 스코프에서 변수 x의 선언을 검색한다.
+foo 함수의 스코프에는 변수 x의 선언이 없으므로 검색에 실패할 것이고,
+자바스크립트 엔진은 변수 x를 검색하기 위해 foo 함수 컨텍스트의 상위 스코프(위 예제의 경우, 전역 스코프)에서 변수 x의 선언을 검색한다.
+
+전역 스코프에도 변수 x의 선언이 존재하지 않기 때문에 ReferenceError를 throw할 것 같지만,
+자바스크립트 엔진은 암묵적으로 전역 객체에 프로퍼티 x를 동적 생성한다.
+결국 식별자 x는 전역 변수가 된다. 이렇게 전역 변수가 된 변수를 **암묵적 전역 변수(implicit global)** 라 한다.
+
+개발자의 의도와는 상관없이 자바스크립트 엔진이 생성한 암묵적 전역 변수는 오류를 발생시키는 원인이 될 가능성이 크다.
+**따라서 반드시 var, let, const 키워드를 사용하여 변수를 선언한 다음 변수를 사용해야 한다.**
+
+하지만, 오타나 문법 지식의 미비로 인한 실수는 언제나 발생하는 것이다.
+따라서 오류를 줄여 안정적인 코드를 생산하기 위해서는 보다 근본적인 접근이 필요하다.
+다시 말해, 잠재적인 오류를 발생시키기 어려운 개발 환경을 만들고 그 환경에서 개발을 하는 것이 보다 근본적인 해결책이라고 할 수 있다.
+
+이를 지원하기 위해 ES5부터 strict mode가 추가되었다.
+strict mode는 자바스크립트 언어의 문법을 보다 엄격히 적용하여 기존에는 무시되던 오류를 발생시킬 가능성이 높거나 자바스크립트 엔진의 최적화 작업에 문제를 일으킬 수 있는 코드에 대해 명시적인 에러를 발생시킨다.
+
+ESLint와 같은 린트 도구를 사용하여도 strict mode와 유사한 효과를 얻을 수 있다. 린트 도구는 정적 분석(static analysis) 기능을 통해 소스 코드를 실행하기 전에 소스 코드를 스캔하여 문법적 오류만이 아니라 잠재적 오류까지 찾아내고 오류의 이유를 리포팅해주는 유용한 도구이다.
+
+======================================================================================================
+
+### this
+
+자바스크립트의 함수는 호출될 때, 매개변수로 전달되는 인자값 이외에 arguments 객체와 this를 암묵적으로 전달받는다.
+
+this가 객체 자신에 대한 참조 값을 가지고 있다는 뜻이다.
+주로 _매개변수와 객체 자신이 가지고 있는 멤버변수명이 같을 경우 이를 구분하기 위해서_ 사용된다.
+
+```
+function square(number) {
+
+  console.log(arguments); //[Arguments] { '0': 2 }
+  console.log(this); //<ref *1> Object [global] {...
+
+  return number * number;
+}
+
+square(2);
+```
+
+자바스크립트의 경우 Java와 같이 **this에 바인딩되는 객체는 한가지가 아니라 함수 호출 방식에 따라 this에 바인딩되는 객체가 달라진다.**
+
+### 함수 호출 방식과 this 바인딩
+
+자바스크립트의 경우 함수 호출 방식에 의해 this에 바인딩할 어떤 객체가 동적으로 결정된다.
+함수를 선언할 때, this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, **함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.**
+
+함수를 호출하는 방식
+
+1. 함수 호출
+2. 메소드 호출
+3. 생성자 함수 호출
+4. apply/call/bind 호출
+
+```
+var foo = function () {
+  console.dir(this);
+};
+
+// 1. 함수 호출
+foo(); // = window.foo();
+
+// 2. 메소드 호출
+var obj = { foo: foo };
+obj.foo(); // obj
+
+// 3. 생성자 함수 호출
+var instance = new foo(); // instance
+
+// 4. apply/call/bind 호출
+var bar = { name: 'bar' };
+foo.call(bar);   // bar
+foo.apply(bar);  // bar
+foo.bind(bar)(); // bar
+```
+
+### 함수 호출
+
+전역 객체(Global Object)는 모든 객체의 유일한 최상위 객체를 의미하며 일반적으로 Browser-side에서는 window, Server-side(Nodejs)에서는 global 객체를 의미한다.
+
+기본적으로 this는 **전역객체에 바인딩된다.** 전역함수는 물론이고 심지어 내부함수의 경우도 this는 외부함수가 아닌 전역객체에 바인딩된다.
+
+내부함수는 일반 함수, 메소드, 콜백함수 어디에서 선언되었든 관계없이 this는 전역객체를 바인딩한다.
+
+```
+var value = 1;
+
+var obj = {
+  value: 100,
+  foo: function() {
+    setTimeout(function() {
+      console.log("callback's this: ",  this);  // window
+      console.log("callback's this.value: ",  this.value); // 1
+    }, 100);
+  }
+};
+
+obj.foo();
+```
+
+### 메소드 호출
+
+함수가 객체의 프로퍼티 값이면 메소드로서 호출된다.
+이 때, 내부의 this는 해당 메소드를 소유한 객체. 즉, 해당 메소드를 호출한 객체에 바인딩된다.
+
+```
+var obj1 = {
+  name: 'Lee',
+  sayName: function() {
+    console.log(this.name);
+  }
+}
+
+var obj2 = {
+  name: 'Kim'
+}
+
+obj2.sayName = obj1.sayName;
+
+obj1.sayName(); // Lee
+obj2.sayName(); // Kim
+```
+
+### 생성자 함수 호출
+
+자바스크립트의 생성자 함수는 말 그대로 객체를 생성하는 역할을 한다.
+하지만, 자바와 같은 객체지향 언어의 생성자 함수와는 다르게 그 형식이 정해져 있는 것이 아니라 **기존 함수에 new 연산자를 붙여서 호출하면 해당 함수는 생성자 함수로 동작한다.**
+
+이는 반대로 생각하면 생성자 함수가 아닌 일반 함수에 new연산자를 붙여 호출하면 생성자 함수처럼 동작할 수 있다.
+따라서, 일반적으로 생성자 함수명은 **첫문자를 대문자로 기술하여 혼란을 방지하려는 노력을한다.**
+
+```
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+var me = new Person('Lee');
+console.log(me); // Person&nbsp;{name: "Lee"}
+
+// new 연산자와 함께 생성자 함수를 호출하지 않으면 생성자 함수로 동작하지 않는다.
+var you = Person('Kim');
+console.log(you); // undefined
+```
+
+#### 생성자 함수 동작 방식
+
+new 연산자와 함께 생성자 함수를 호출하면 다음과 같은 수순으로 동작한다.
+
+1. 빈 객체 생성 및 this 바인딩
+
+- 생성자 함수의 코드가 실행되기 전 빈 객체가 생성된다.
+- 이 빈 객체가 생성자 함수가 새로 생성하는 객체이다.
+- 이 후, 생성자 함수 내에서 사용하는 this는 이 빈 객체를 가리킨다.
+- 그리고, 생성된 빈 객체는 생성자 함수의 prototype 프로퍼티가 가리키는 객체를 자신의 프로토타입 객체로 설정한다.
+
+2. this를 통한 프로퍼티 생성
+
+- 생성된 빈 객체에 this를 사용하여 동적으로 프로퍼티나 메소드를 생성할 수 있다.
+- this는 새로 생성된 객체를 가리키므로 this를 통해 생성한 프로퍼티와 메소드는 새로 생성된 객체에 추가된다.
+
+3. 생성된 객체 반환
+
+- 반환문이 없는 경우, this에 바인딩된 새로 생성한 객체가 반환된다. 명시적으로 this를 반환하여도 결과는 같다.
+- 반환문이 this가 아닌 다른 객체를 명시적으로 반환하는 경우, this가 아닌 해당 객체가 반환된다. 이 때, this를 반환하지 않은 함수는 생성자 함수로서의 역할을 수행하지 못한다. 따라서 생성자 함수는 반환문을 명시적으로 사용하지 않는다.
+
+```
+function Person(name) {
+  // 생성자 함수 코드 실행 전 -------- 1
+  this.name = name;  // --------- 2
+  // 생성된 함수 반환 -------------- 3
+}
+
+var me = new Person('Lee');
+console.log(me.name);  // Lee
+```
+
+#### 객체 리터럴 방식과 생성자 함수 방식의 차이
+
+둘의 차이는 프로토타입 객체 [[Prototype]]에 있다.
+
+```
+// 객체 리터럴 방식
+var foo = {
+  name: 'foo',
+  gender: 'male'
+}
+
+console.dir(foo); // { name: 'foo', gender: 'male' }
+
+// 생성자 함수 방식
+function Person(name, gender) {
+  this.name = name;
+  this.gender = gender;
+}
+
+var me  = new Person('Lee', 'male');
+console.dir(me); // Person { name: 'Lee', gender: 'male' }
+
+var you = new Person('Kim', 'female');
+console.dir(you); // Person { name: 'Kim', gender: 'female' }
+```
+
+- 객체 리터럴 방식의 경우, 생성된 객체의 프로토타입 객체는 Object.prototype이다.(전역 객체)
+- 생성자 함수 방식의 경우, 생성된 객체의 프로토타입 객체는 Person.prototype이다.(함수가 생성한 빈 객체)
+  즉, 바로 위를 가리킨다.
+
+#### 생성자 함수에 new 연산자를 붙이지 않고 호출할 경우
+
+**일반함수와 생성자 함수에 특별한 형식적 차이는 없으며 함수에 new 연산자를 붙여서 호출하면 해당 함수는 생성자 함수로 동작한다.**
+
+_그러나_ 객체 생성 목적으로 작성한 생성자 함수를 new 없이 호출하거나 일반함수에 new를 붙여 호출하면 오류가 발생할 수 있따.
+**일반함수와 생성자 함수의 호출 시 this 바인딩 방식이 다르기 때문이다.**
+
+일반 함수를 호출하면 this는 전역객체에 바인딩되지만 new 연산자와 함께 생성자 함수를 호출하면 this는 생성자함수가 암묵적으로 생성한 빈 객체에 바인딩된다.
+
+```
+function Person(name) {
+  // new없이 호출하는 경우, 전역객체에 name 프로퍼티를 추가
+  this.name = name;
+};
+
+// 일반 함수로서 호출되었기 때문에 객체를 암묵적으로 생성하여 반환하지 않는다.
+// 일반 함수의 this는 전역객체를 가리킨다.
+var me = Person('Lee');
+
+console.log(me); // undefined
+console.log(window.name); // Lee
+```
+
+_생성자 함수를 new없이 호출한 경우_ **함수 Person 내부의 this는 전역객체를 가리키므로 name은 전역 변수(window)에 바인딩된다.**
+또한 new와 함께 생성자 함수를 호출하는 경우에 암묵적으로 반환하던 this도 반환하지 않으며, 반환문이 없으므로 undefined를 반환하게 된다.
+
+#### apply/call/bind 호출
+
+this에 바인딩될 객체는 함수 호출 패턴에 의해 결정된다. 이는 자바스크립트 엔진이 수행하는 것이다.
+이러한 자바스크립트 엔진의 암묵적 this 바인딩 이외에 this를 특정 객체에 명시적으로 바인딩하는 방법도 제공된다.
+이것을 가능하게 하는 것이 Function.prototype.apply, Function.prototype.call 메소드이다.
+
+```
+func.apply(thisArg, [argsArray])
+
+// thisArg: 함수 내부의 this에 바인딩할 객체
+// argsArray: 함수에 전달할 argument의 배열
+```
+
+apply() 메소드를 호출하는 주체는 함수이며, apply()메소드는 this를 특정 객체에 바인딩할 뿐, 본질적인 기능은 함수 호출이다.
+
+```
+var Person = function (name) {
+  this.name = name;
+};
+
+var foo = {};
+
+// apply 메소드는 생성자함수 Person을 호출한다. 이때 this에 객체 foo를 바인딩한다.
+Person.apply(foo, ['name']);
+
+console.log(foo); // { name: 'name' }
+```
+
+빈 객체 foo를 apply()메소드의 첫번째 매개변수에 주고, argument의 배열을 두번째 매개변수에 전달하면서 Person 함수를 호출했다.
+이 때, Person 함수의 this는 foo객체가 된다.
+Person 함수는 this의 name 프로퍼티에 매개변수 name에 할당된 인수를 할당하는데 this에 바인딩된 _foo객체에는 name프로퍼티가 없으므로 name 프로퍼티가 동적으로 추가되고 값이 할당된다._
+
+apply()메소드의 대표적인 용도는 arguments 객체와 같은 유사 배열 객체에 배열 메소드를 사용하는 경우이다.
+arguments 객체는 배열이 아니기 때문에 slice() 같은 배열의 메소드를 사용할 수 없지만, apply()메소드를 사용하면 가능하다.
+
+```
+
+function convertArgsToArray() {
+  console.log(arguments); //[Arguments] { '0': 1, '1': 2, '2': 3 }
+
+  // arguments 객체를 배열로 변환
+  // slice: 배열의 특정 부분에 대한 복사본을 생성한다.
+  var arr = Array.prototype.slice.apply(arguments); // arguments.slice
+  // var arr = [].slice.apply(arguments);
+
+  console.log(arr); //[ 1, 2, 3 ]
+  return arr;
+}
+
+convertArgsToArray(1, 2, 3);
+```
+
+call()메소드의 경우 apply()와 기능은 같지만 apply()의 두번째 인자에서 배열 형태로 넘긴 것을 각각 하나의 인자로 넘긴다.
+
+```
+Person.apply(foo, [1, 2, 3]);
+
+Person.call(foo, 1, 2, 3);
+```
+
+apply()와 call()메소드는 콜백함수의 this를 위해서 사용하기도 한다.
