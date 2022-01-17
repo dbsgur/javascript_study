@@ -321,6 +321,11 @@ function getType(target) {
 
 위의 방법으로는 객체의 종류(일반객체, 배열, Date, RegExp, Function, DOM 등)까지 식별할 수 있는 타입 체크 기능을 만들 수 있따.
 Object.prototype.toString 방법으로는 객체의 상속 관계까지는 체크할 수 없다.
+타입 연산자(Type Operator)에는 앞서 살펴본 typeof 이외에 instanceof를 제공한다.
+
+instanceof 연산자는 피연산자인 객체가 우항에 명시한 타입의 인스턴스인지 여부를 알려준다.
+
+이때 타입이란 constructor를 말하며 프로토타입 체인에 존재하는 모든 constructor를 검색하여 일치하는 constructor가 있다면 true를 반환한다.
 
 ### 유사 배열 객체(array-like object)
 
@@ -451,11 +456,11 @@ console.log(student.hasOwnProperty('name')); // true
 student 객체는 hasOwnProperty 메소드를 가지고 있지 않으므로 에러가 발생해야 정상이나 정상적으로 출력이 된다.
 이는 student 객체의 [[Prototype]]이 가리키는 링크를 따라가서 student객체의 부모 역할을 하는 프로토타입 객체(Object.prototype)의 메소드 hasOwnProperty를 호출했기 때문이다.
 
-| 객체 생성 방식 | 엔진의 객체 생성 | 인스턴스의 prototype 객체 |
-|!---!|!---!|!---!|
-|`객체 리터럴`|`Object() 생성자 함수`|`Object.prototype`|
-|`Object() 생성자 함수`|`Object() 생성자 함수`|`Object.prototype`|
-|`생성자 함수`|`생성자 함수`|`생성자 함수 이름.prototype`|
+|     객체 생성 방식     |    엔진의 객체 생성    |  인스턴스의 prototype 객체   |
+| :--------------------: | :--------------------: | :--------------------------: |
+|     `객체 리터럴`      | `Object() 생성자 함수` |      `Object.prototype`      |
+| `Object() 생성자 함수` | `Object() 생성자 함수` |      `Object.prototype`      |
+|     `생성자 함수`      |     `생성자 함수`      | `생성자 함수 이름.prototype` |
 
 ### 프로토타입 객체의 확장
 
