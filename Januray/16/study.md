@@ -1,3 +1,5 @@
+2021. 1.  16
+
 Immutability(변경 불가능)은 객체가 생성된 이후 그 상태를 변경할 수 없는 디자인 패턴을 의미한다.
 Immutability는 함수형 프로그래밍의 핵심 원리이다.
 
@@ -12,7 +14,7 @@ Immutability는 함수형 프로그래밍의 핵심 원리이다.
 
 ### Immutable value VS Mutable value
 
-Javascript의 *원시 타입(primitive data type)*은 **변경불가능한 값(immutable value)**이다.
+Javascript의 _원시 타입(primitive data type)_ 은 **변경불가능한 값(immutable value)**이다.
 
 **원시타입 : Boolean, null, undefined, Number, Strin, Symbol**
 
@@ -352,7 +354,7 @@ var example = function(number){
 ```
 
 함수 표현 방식으로 정의한 함수는 함수명을 생략할 수 있다.
-이러한 함수를 \__익명 함수(anonymous function)_ 이라한다.
+이러한 함수를 _익명 함수(anonymous function)_ 이라한다.
 함수 표현식에는 함수명을 생략하는 것이 일반적이다.
 
 ```
@@ -387,7 +389,7 @@ console.log(bar(10, 10)); // 100
 위 코드를 보면 알겠지만, 변수 bar와 변수foo는 **동일한 익명 함수의 참조값을 갖는다.**
 
 **함수가 할당된 변수를 사용해 함수를 호출하지 않고 기명 함수의 함수명을 사용해 호출하게 되면 에러가 발생한다.**
-\__이는 함수 표현식에서 사용한 함수명은 외부코드에서 접근 불가능하기 때문이다._
+_이는 함수 표현식에서 사용한 함수명은 외부코드에서 접근 불가능하기 때문이다._
 
 #### Function 생성자 함수
 
@@ -423,7 +425,7 @@ function example(number) {
 **자바스크립트는 ES6의 let, const를 포함하여 모든 선언(var, let, const, function, function\*, class)을 호이스팅한다.**
 
 함수선언문으로 정의된 함수는 자바스크립트 엔진이 스크립트가 로딩되는 시점에 바로 초기화하고 이를 VO(variable object)에 저장한다.
-**즉, 함수 선선, 초기화, 할당이 한번에 이루어진다.** 그렇기 때문에 함수 선언의 위치와는 상관없이 소스 내 어느 곳에서든지 호출이 가능하다.
+**즉, 함수 선언, 초기화, 할당이 한번에 이루어진다.** 그렇기 때문에 함수 선언의 위치와는 상관없이 소스 내 어느 곳에서든지 호출이 가능하다.
 
 ```
 var res = example(5); // TypeError: square is not a function
