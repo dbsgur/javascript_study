@@ -6,6 +6,8 @@ const bgImage = document.createElement("img");
 
 bgImage.src = `img/${chooseImage}`;
 
+bgImage.style = "position: 'absolute'";
+
 // console.log(bgImage);
 
 document.body.appendChild(bgImage);
