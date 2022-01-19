@@ -319,3 +319,284 @@ me.setName("Kim");
 name = me.getName();
 
 console.log(name); // Kim
+
+//==============================================
+//             CODING_TEST
+//==============================================
+
+//별찍기
+process.stdin.setEncoding("utf8");
+process.stdin.on("data", (data) => {
+  const n = data.split(" ");
+  const a = Number(n[0]),
+    b = Number(n[1]);
+  for (let i = 0; i < b; i++) {
+    //i을 선언해주고 몇줄(b)만큼 반복
+    let str = ""; //출력할 변수 선언
+    for (let j = 0; j < a; j++) {
+      // j선언후 별을 한줄에 몇개 찍을지 반복
+      str = str + "*"; //출력할 변수에 별을 담는다
+    }
+    console.log(str); // 출력
+  }
+});
+
+//
+
+//x만큼 간격이 있는 n개의 숫자
+function solution(x, n) {
+  var answer = [];
+  for (let i = 1; i <= n; i++) {
+    answer.push(x * i);
+  }
+  return answer;
+}
+
+//
+
+//행렬의 덧셈
+function solution2(arr1, arr2) {
+  return arr1.map((e, i) => arr2[i].map((v, j) => arr1[i][j] + arr2[i][j]));
+}
+
+//
+
+//핸드폰 번호가리기
+function solution(phone_number) {
+  var answer = "";
+  for (let i = 0; i < phone_number.length - 4; i++) {
+    answer += "*";
+  }
+  //생략이 가능하다!
+  answer += phone_number.slice(-4, phone_number.length);
+  return answer;
+}
+
+function hide_numbers(s) {
+  var result = "*".repeat(s.length - 4) + s.slice(-4);
+  //함수를 완성해주세요
+
+  return result;
+}
+
+function hide_numbers(s) {
+  return s.replace(/\d(?=\d{4})/g, "*");
+}
+
+//
+
+//하샤드 수
+function solution(x) {
+  let sum = 0;
+  for (let i = 0; i < String(x).length; i++) {
+    sum += Number(String(x)[i]);
+  }
+  return x % sum === 0;
+}
+// 자주쓰는 것 변수 할당하는 습관 > 가독성 상승
+function Harshad(n) {
+  var sum = 0;
+  var arr = String(n).split("");
+  for (var i = 0; i < arr.length; i++) {
+    sum += Number(arr[i]);
+  }
+  return n % sum == 0 ? true : false;
+}
+//Speed
+function solution(x) {
+  let num = x;
+  let sum = 0;
+  do {
+    sum += x % 10;
+    x = Math.floor(x / 10);
+  } while (x > 0);
+
+  return !(num % sum);
+}
+
+//
+
+//평균 구하기
+function solution(arr) {
+  var answer = 0;
+  arr.forEach(function (v) {
+    answer += v;
+  });
+  return answer / arr.length;
+}
+
+function average(array) {
+  return array.reduce((a, b) => a + b) / array.length;
+}
+
+//
+
+//콜라츠 추측
+function solution(num) {
+  var answer = 0;
+  while (num !== 1) {
+    num % 2 === 0 ? (num /= 2) : (num = 3 * num + 1);
+    answer += 1;
+    if (answer === 500) {
+      return -1;
+    }
+  }
+  return answer;
+}
+function collatz(num) {
+  var answer = 0;
+  while (num != 1 && answer != 500) {
+    num % 2 == 0 ? (num = num / 2) : (num = num * 3 + 1);
+    answer++;
+  }
+  return num == 1 ? answer : -1;
+}
+
+//
+
+//최대공약수, 최소공배수
+const calcGcd = (a, b) => {
+  if (b === 0) return a;
+  return a > b ? calcGcd(b, a % b) : calcGcd(a, b % a);
+};
+
+const solution = (n, m) => {
+  var answer = [];
+  var gcd = calcGcd(n, m);
+  var lcm = (n * m) / gcd;
+  return [gcd, lcm];
+};
+
+//
+
+//짝수와 홀수
+function solution(num) {
+  return num % 2 ? "Odd" : "Even";
+}
+
+//
+
+//작은 수 제거하기
+function solution(arr) {
+  if (arr.length <= 1) return [-1];
+  arr.sort();
+  arr.splice(0, 1);
+  return arr.reverse();
+}
+function solution(arr) {
+  if (arr.length === 1) {
+    return [-1];
+  }
+  const minValue = Math.min.apply(null, arr);
+  const index = arr.findIndex((value) => value === minValue);
+  arr.splice(index, 1);
+  return arr;
+}
+
+//
+//제곱근
+function solution(n) {
+  const num = Math.sqrt(n);
+  return Number.isInteger(num) ? Math.pow(num + 1, 2) : -1;
+}
+
+//
+//숫자 뒤집기
+function solution(n) {
+  return Number(String(n).split("").sort().reverse().join(""));
+}
+
+function solution(n) {
+  //숫자가 분명히 더 빠름
+  var nums = [];
+  do {
+    nums.push(n % 10);
+    n = Math.floor(n / 10);
+  } while (n > 0);
+
+  return nums.sort((a, b) => b - a).join("") * 1;
+  //문자는 느림
+  return (
+    (n + "")
+      .split("")
+      .sort((a, b) => b - a)
+      .join("") * 1
+  );
+}
+
+//
+
+//
+function solution(n) {
+  var nums = [];
+  do {
+    nums.push(n % 10);
+    n = Math.floor(n / 10);
+  } while (n > 0);
+
+  return nums;
+}
+
+//
+//자릿수 더하기
+function solution(n) {
+  let arr = [];
+  do {
+    arr.push(n % 10);
+    n = Math.floor(n / 10);
+  } while (n > 0);
+  return arr.reduce((a, b) => a + b);
+}
+function solution(n) {
+  // 문자 풀이
+  // return (n+"").split("").reduce((acc, curr) => acc + parseInt(curr), 0)
+
+  // 숫자풀이
+  var sum = 0;
+
+  do {
+    sum += n % 10;
+    n = Math.floor(n / 10);
+  } while (n > 0);
+
+  return sum;
+}
+
+//
+//이상한문자열
+function solution(s) {
+  let arr = [];
+  arr = s.split(" ");
+  let answer = "";
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      if (j % 2) {
+        answer += arr[i][j].toLowerCase();
+      } else {
+        answer += arr[i][j].toUpperCase();
+      }
+    }
+    if (i === arr.length - 1) {
+      break;
+    }
+    answer += " ";
+  }
+  return answer;
+}
+function toWeirdCase(s) {
+  //함수를 완성해주세요
+  return s.toUpperCase().replace(/(\w)(\w)/g, function (a) {
+    return a[0].toUpperCase() + a[1].toLowerCase();
+  });
+}
+function toWeirdCase(s) {
+  return s
+    .split(" ")
+    .map((i) =>
+      i
+        .split("")
+        .map((j, key) => (key % 2 === 0 ? j.toUpperCase() : j))
+        .join("")
+    )
+    .join(" ");
+}
