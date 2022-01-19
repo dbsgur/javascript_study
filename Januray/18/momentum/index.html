@@ -4,30 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
   <title>Momentum</title>
 </head>
 <body>
-  <form id="login-form" class="hidden">
-    <input required maxlength="15" type="text" placeholder="What is your name"/>
-    <input type="submit" value="LOG IN">
-  </form>
-  <h2 id="clock"></h2>
-  <h1 class="hidden" id="greeting"></h1>
-  <form id="todo-form">
-    <input tyep="text" placeholder="Write a To Do and Press Enter" required />
-  </form>
-  <ul id="todo-list">
-  </ul>
-  <div id="quote">
-    <span></span>
-    <span></span>
+  <div class="scene">
+    <!-- Background -->
+    <div class="full-background"></div>
+
+    <div id="contents">
+      <div id="top">
+        <div>
+          <button id="todo-list-btn">
+            <i class="far fa-list-alt"></i>
+          </button>
+            <span id="todo-span" class="hidden">TO DO</span>
+        </div>
+
+        <!-- TODO FORM -->
+        <div id="modal" class="modal-overlay hidden">
+          <div class="modal-window hidden" id="modal-todo-list">
+            <form id="todo-form">
+              <input type="text" placeholder="Write a To Do and Pres Enter" required/>
+            </form>
+
+            <!-- TODO LIST -->
+            <ul id="todo-list"></ul>
+          </div>
+        </div>
+
+        <!-- WEATHER -->
+        <div id="weather">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div id="main">
+        <!-- CLOOCK -->
+        <div id="clock">00:00:00</div>
+        <div id="today-info"></div>
+
+        <!-- LOGIN -->
+        <form class="hidden" id="login-form">
+          <input required maxlength="15" type="text" placeholder="What is your name?"/>
+          <input type="submit" value="LOGIN" id="login-button"/>
+        </form>
+        <h1 id="greeting" class="hidden"></h1>
+
+        <button class="hidden" id="logout-button">LOGOUT</button>
+      </div>
+
+      <!-- Quote -->
+      <div id="quote">
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
   </div>
-  <div id="weather"><span></span><span></span></div>
   <script src="js/greeting.js"></script>
   <script src="js/clock.js"></script>
   <script src="js/quotes.js"></script>
   <script src="js/background.js"></script>
   <script src="js/todo.js"></script>
   <script src="js/weather.js"></script>
+  <script
+      src="https://kit.fontawesome.com/eb1c9c2a9c.js"
+      crossorigin="anonymous"
+    ></script>
 </body>
 </html>

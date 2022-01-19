@@ -4,39 +4,39 @@ const quotes = [
     author: "NIKE",
   },
   {
+    quote: "JUST DO IT !",
+    author: "NIKE",
+  },
+  {
+    quote: "JUST DO IT !",
+    author: "NIKE",
+  },
+  {
+    quote: "JUST DO IT !",
+    author: "NIKE",
+  },
+  {
+    quote: "JUST DO IT !",
+    author: "NIKE",
+  },
+  {
+    quote: "JUST DO IT !",
+    author: "NIKE",
+  },
+  {
     quote: "JUST DO IT !!",
     author: "NIKE",
   },
   {
-    quote: "JUST DO IT !!!",
+    quote: "JUST DO IT !!",
     author: "NIKE",
   },
   {
-    quote: "JUST DO IT !!!!",
+    quote: "JUST DO IT !!",
     author: "NIKE",
   },
   {
-    quote: "JUST DO IT !!!!!",
-    author: "NIKE",
-  },
-  {
-    quote: "JUST DO IT !!!!!!",
-    author: "NIKE",
-  },
-  {
-    quote: "JUST DO IT !!!!!!!",
-    author: "NIKE",
-  },
-  {
-    quote: "JUST DO IT !!!!!!!!",
-    author: "NIKE",
-  },
-  {
-    quote: "JUST DO IT !!!!!!!!!",
-    author: "NIKE",
-  },
-  {
-    quote: "JUST DO IT !!!!!!!!!!",
+    quote: "JUST DO IT !!",
     author: "NIKE",
   },
 ];

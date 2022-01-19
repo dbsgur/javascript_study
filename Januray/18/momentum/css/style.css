@@ -1,7 +1,271 @@
+:root {
+  /* color */
+  --color-white: #fafafa;
+  --color-light-grey: #dfdfdf;
+  --color-background: #1d1a1a49;
+  --color-todolist: #1d1d1db6;
+  --color-dark-grey: #3d3535b6;
+  --color-deep-dark-grey: #0f0e0eb6;
+
+  /* size */
+  --base-space: 8px;
+  --large-space: 12px;
+  --size-button: 60px;
+  --size-border-radius: 5px;
+  --size-placeholder: 18px;
+
+  /* font size */
+  --font-large: 20px;
+  --font-regular: 16px;
+  --font-medium: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
 body {
-  background-color: whitesmoke;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+  height: 100%;
+}
+
+.scene {
+  height: 100%;
+  position: relative;
+  background-color: black;
+}
+
+.full-background {
+  position: absolute;
+}
+
+.full-background img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+#contents {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--color-background);
+}
+
+#top {
+  display: flex;
+  height: 10%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+#clock {
+  display: flex;
+  justify-content: center;
+  margin: var(--large-space);
+  color: var(--color-white);
+  font-size: 135px;
+  font-weight: 600;
+}
+
+#today-info {
+  color: var(--color-white);
+  font-size: var(--font-large);
+  margin: 10px;
+  font-weight: 600;
+}
+
+#weather {
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 30px;
+}
+
+#login-form input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-light-grey);
+  font-size: 25px;
+  color: var(--color-white);
+  margin-top: 20px;
+  text-align: center;
+}
+
+#login-form input:focus {
+  outline: none;
+}
+
+#login-form input::placeholder {
+  color: var(--color-light-grey);
+  font-size: var(--size-placeholder);
+  text-align: center;
+}
+
+#login-button {
+  display: none;
+}
+
+#logout-button {
+  background: none;
+  border: 1px solid var(--color-light-grey);
+  color: var(--color-white);
+  font-size: 20px;
+  padding: var(--base-space);
+  border-radius: 100px;
+  margin-top: 20px;
+  width: 120px;
+}
+
+#logout-button:hover {
+  transform: scale(1.1);
+}
+
+#greeting {
+  font-size: 40px;
+  color: var(--color-white);
+  margin: var(--large-space);
+}
+
+#todo-list-btn {
+  background: none;
+  /* color: wheat; */
+  border: none;
+  font-size: 35px;
+  color: var(--color-white);
+  padding: var(--base-space);
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+#todo-list-btn:hover {
+  transform: scale(1.1);
+}
+
+#todo-span {
+  color: var(--color-white);
+}
+
+.modal-overlay {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+}
+
+#modal-todo-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--color-todolist);
+  width: 400px;
+  height: 300px;
+  border-radius: var(--size-border-radius);
+  margin: 70px 0px 0px 30px;
+}
+
+#todo-form input {
+  background-color: #1d1d1db6;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  padding: var(--base-space);
+  color: var(--color-white);
+  font-size: var(--font-medium);
+  margin: 10px 0px 0px 10px;
+  width: 95%;
+}
+
+#todo-form input:focus {
+  outline: none;
+}
+
+#todo-form > input::placeholder {
+  color: var(--color-light-grey);
+  font-size: var(--font-medium);
+}
+
+#todo-list {
+  color: var(--color-white);
+  margin: var(--base-space);
+  list-style: none;
+  overflow-y: scroll;
+}
+
+#todo-list::-webkit-scrollbar {
+  width: 10px;
+}
+#todo-list::-webkit-scrollbar-thumb {
+  background-color: var(--color-todolist);
+}
+
+#todo-list::-webkit-scrollbar-track {
+  background-color: none;
+}
+
+#todo-list li {
+  padding: var(--base-space);
+}
+
+#todo-list button {
+  background: none;
+  border: none;
+  color: var(--color-light-grey);
+  margin-left: var(--base-space);
+}
+
+#quote {
+  display: flex;
+  height: 10%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 15px;
+}
+
+#quote span:first-child {
+  color: var(--color-white);
+  text-align: center;
+}
+
+#quote span:last-child {
+  color: var(--color-white);
+  text-align: center;
 }
 
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 560px) and (max-height: 480px) {
+  #quote span:first-child,
+  #quote span:last-child,
+  #greeting,
+  #login-form,
+  #logout-button,
+  #top {
+    display: none;
+  }
 }
