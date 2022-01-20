@@ -426,3 +426,285 @@ encodeURIComponent()는 인수를 쿼리스트링의 일부라고 간주한다.
 따라서 = ? &를 인코딩한다.
 
 반면, encodeURI()는 인수를 URI전체라고 간주하며 파라미터 구분자인 = ? &를 인코딩하지 않는다.
+
+====================================================================================================================================
+
+Number 객체는 원시타입 number를 다룰 때 유용한 프로퍼티와 메소드를 제공하는 래퍼(wrapper)객체이다.
+변수 또는 객체의 프로퍼티가 숫자를 값으로 가지고 있다면 Number 객체의 별도 생성없이 Number 객체의 프로퍼티와 메소드를 사용할 수 있다.
+
+### Number Constructor
+
+Number 객체는 Number()생성자 함수를 통해 생성할 수 있다.
+
+만일 인자가 숫자로 변활 될 수 없다면 NaN을 반환한다.
+
+```
+var x = new Number(123);
+var y = new Number('123');
+var z = new Number('str');
+
+console.log(x); // 123
+console.log(y); // 123
+console.log(z); // NaN
+```
+
+Number()생성자 함수를 new 연산자를 붙이지 않아 생성자로 사용하지 않으면 Number 객체를 반환하지 않고 원시 타입 숫자를 반환한다.
+
+```
+
+var x = Number('123');
+
+console.log(typeof x, x); // number 123
+var x = 123;
+var y = new Number(123);
+
+console.log(x == y);  // true
+console.log(x === y); // false
+
+console.log(typeof x); // number
+console.log(typeof y); // object
+```
+
+### Number Property
+
+정적 프로퍼티로 Number 객체를 생성할 필요 없이 _Number.propertyName_ 의 형태로 사용한다.
+
+```
+console.log(0.1 + 0.2 == 0.3); //false
+console.log(0.1 + 0.2 === 0.3); // false
+```
+
+위를 해결하기 위해서는 Math.round()메서드나 toFixed()메서드를 사용해서 연산한다.
+부동소수점 산술 연산 비교는 정확한 값을 기대하기 어렵다.
+
+#### Number.EPSILON
+
+Number.EPSILON은 Javascript에서 표현할 수 있는 가장 작은 수이다. 2^-52
+
+#### Number.MAX_VALUE
+
+자바스크립트에서 가장 큰 숫자를 반환한다.
+
+#### Number.MIN_VALUE
+
+0에 가장 가까운 양수 값이다. 이것보다 작은 수는 0이다.
+
+```
+let num = Number.MIN_VALUE;
+let num2 = Number.EPSILON;
+console.log(num > num) // false
+```
+
+#### Number.POSITIVE_INFINITY
+
+양의 무한대 Infinity를 반환한다.
+
+#### Number.NEGATIVE_INFINITY
+
+음의 무한대 -Infinity를 반환한다.
+
+#### Number.NaN
+
+Number.NaN프로퍼티는 window.NaN 프로퍼티와 같다.
+
+### Number Method
+
+#### Number.isFinite (testValue: number):boolean
+
+매개 변수에 전달된 값이 정상적인 유한수인지를 검사하여 그 결과를 Boolean으로 반환한다.
+
+```
+Number.isFinite(Infinity)  // false
+Number.isFinite(NaN)       // false
+Number.isFinite('Hello')   // false
+Number.isFinite('2005/12/12')   // false
+
+Number.isFinite(0)         // true
+Number.isFinite(2e64)      // true
+Number.isFinite(null)      // false. isFinite(null) => true
+```
+
+#### Number.isInteger(testValue: number) :boolean
+
+매개변수에 전달된 값이 정수인지 검사하여 그 결과를 Boolean으로 반환한다.
+
+#### Number.isNaN(testValue: number) : boolean
+
+매개변수에 전달된값이 NaN인지 검사하여 그 결과를 boolean으로 반환한다.
+
+#### Number.isSafeInteger(testValue : number) : boolean
+
+매개변수에 전달된 값이 안전한 정수값인지 검사하여 그 결과를 boolean으로 반환한다.
+안전한 정수 값은 -(2^53 -1 ~ 2^53 -1 사이의 수이다.
+
+#### Number.prototype.toExponential(fractionDigits?:number):string
+
+대상을 지수 표기법으로 변환하여 문자열을 반환한다.
+지수 표기법이란 매우 큰 숫자를 표기할 때 주로 사용하며 e앞에 있는 숫자에 10의 n승이 곱하는 형식으로 수를 나타내는 방식이다.
+
+#### 정수 리터럴과 함께 메소드를 사용하는 경우
+
+```
+(77).toString()
+```
+
+#### Number.prototype.toFixed(fractionDigits?:number):boolean
+
+매개 변수로 지정된 소숫점 자리를 반올림하여 문자열로 반환한다.
+
+#### Number.prototype.toPrecision(precision?:number):string
+
+매개변수로 지정된 전체 자릿수까지 유효하도록 나머지 자릿수를 반올림하여 문자열로 반환한다.
+지정된 전체 자릿수로 표현할 수 없는 경우 지수 표기법으로 결과를 반환한다.
+
+#### Number.prototype.toSting(radix?:number):string
+
+숫자를 문자열로 반환한다.
+
+#### Number.prototype.valueOf():number
+
+Number 객체의 원시 타입 값(primitive value)을 반환한다.
+
+====================================================================================================================================
+
+Math 객체는 수학 상수와 함수를 위한 프로퍼티와 메소드를 제공하는 **빌트인 객체** 이다.
+_Math 객체는 생성자 함수가 아니다._
+따라서, Math객체는 정적 프로퍼티와 메소드만을 제공한다.
+
+### Math Property
+
+#### Math.PO
+
+PI값 (약 3.14)을 반환한다.
+
+```
+console.log(Math.PI); // 3.141592653589793
+```
+
+### Math Method
+
+#### Math.abs(x: number):number
+
+인수의 절대값을 반환한다. 반드시 0 또는 양수다.
+
+```
+Math.abs(-1);       // 1
+Math.abs('-1');     // 1
+Math.abs('');       // 0
+Math.abs([]);       // 0
+Math.abs(null);     // 0
+Math.abs(undefined);// NaN
+Math.abs({});       // NaN
+Math.abs('string'); // NaN
+Math.abs();         // NaN
+```
+
+#### Math.round(x:number) :number
+
+인수의 소수점 이하를 반올림하는 정수를 반환한다.
+
+```
+Math.round(1.4);  // 1
+Math.round(1.6);  // 2
+Math.round(-1.4); // -1
+Math.round(-1.6); // -2
+Math.round(1);    // 1
+Math.round();     // NaN
+```
+
+#### Math.ceil(x: number) : number
+
+인수의 소수점 이하를 올림한 정수를 반환한다.
+
+```
+Math.ceil(1.4);  // 2
+Math.ceil(1.6);  // 2
+Math.ceil(-1.4); // -1
+Math.ceil(-1.6); // -1
+Math.ceil(1);    // 1
+Math.ceil();     // NaN
+```
+
+#### Math.floor(x:number) : number
+
+인수의 소수점 이하를 내림한 정수를 반환한다.
+
+- 양수의 경우 : 소수점 이하를 떼어 버린 다음 정수를 반환한다.
+- 음수의 경우 : 소수점 이하를 떼어 버린 다음 -1을 한 정수를 반환한다.
+
+```
+Math.floor(1.9);  // 1
+Math.floor(9.1);  // 9
+Math.floor(-1.9); // -2
+Math.floor(-9.1); // -10
+Math.floor(1);    // 1
+Math.floor();     // NaN
+```
+
+#### Math.sqrt(x:number) : number
+
+인수의 제곱근을 반환한다.
+
+```
+Math.sqrt(9);  // 3
+Math.sqrt(-9); // NaN
+Math.sqrt(2);  // 1.414213562373095
+Math.sqrt(1);  // 1
+Math.sqrt(0);  // 0
+Math.sqrt();   // NaN
+```
+
+#### Math.random():number
+
+임의의 부동 소수점을 반환한다. 반환된 부동 소수점은 0부터 1미만이다.
+0 <= Math.random < 1
+
+```
+console.log(Math.random()); //0.8783158693612994
+console.log(Math.random()); //0.5035764564166014
+console.log(Math.random()); //0.5401335854352005
+console.log(Math.random()); //0.20211878096296343
+```
+
+#### Math.pow(x:number, y:number):number
+
+첫번째 인수를 밑, 두번째 인수를 지수로 하여 거듭제곱을 반환한다.
+
+```
+Math.pow(2, 8);  // 256
+Math.pow(2, -1); // 0.5
+Math.pow(2);     // NaN
+
+// ES7(ECMAScript 2016) Exponentiation operator(거듭 제곱 연산자)
+2 ** 8; // 256
+```
+
+#### Math.max(...values:number[]):number
+
+인수 중에서 가장 큰 수를 반환한다.
+
+```
+Math.max(1, 2, 3); // 3
+
+// 배열 요소 중에서 최대값 취득
+const arr = [1, 2, 3];
+const max = Math.max.apply(null, arr); // 3
+
+// ES6 Spread operator
+Math.max(...arr); // 3
+```
+
+#### Math.min(...values:number[]):number
+
+인수 중에서 가장 작은 수를 반환한다.
+
+```
+Math.min(1, 2, 3); // 1
+
+// 배열 요소 중에서 최소값 취득
+const arr = [1, 2, 3];
+const min = Math.min.apply(null, arr); // 1
+
+// ES6 Spread operator
+Math.min(...arr); // 1
+```

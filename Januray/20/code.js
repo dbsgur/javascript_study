@@ -206,3 +206,126 @@ parseInt('34 45 66'); // 34
 parseInt(' 60 ');     // 60
 parseInt('40 years'); // 40
 parseInt('He was 40') // NaN1
+
+//
+
+var x = new Number(123);
+var y = new Number('123');
+var z = new Number('str');
+
+console.log(x); // 123
+console.log(y); // 123
+console.log(z); // NaN
+
+//
+
+var x = Number('123');
+
+console.log(typeof x, x); // number 123
+var x = 123;
+var y = new Number(123);
+
+console.log(x == y);  // true
+console.log(x === y); // false
+
+console.log(typeof x); // number
+console.log(typeof y); // object
+
+console.log(0.1 + 0.2 == 0.3); //false
+console.log(0.1 + 0.2 === 0.3); // false
+
+//
+
+let num = Number.MIN_VALUE;
+let num2 = Number.EPSILON;
+console.log(num > num) // false
+
+//
+
+console.log(Math.PI); // 3.141592653589793
+
+//
+
+Math.abs(-1);       // 1
+Math.abs('-1');     // 1
+Math.abs('');       // 0
+Math.abs([]);       // 0
+Math.abs(null);     // 0
+Math.abs(undefined);// NaN
+Math.abs({});       // NaN
+Math.abs('string'); // NaN
+Math.abs();         // NaN
+
+//
+
+Math.round(1.4);  // 1
+Math.round(1.6);  // 2
+Math.round(-1.4); // -1
+Math.round(-1.6); // -2
+Math.round(1);    // 1
+Math.round();     // NaN
+
+//
+
+Math.ceil(1.4);  // 2
+Math.ceil(1.6);  // 2
+Math.ceil(-1.4); // -1
+Math.ceil(-1.6); // -1
+Math.ceil(1);    // 1
+Math.ceil();     // NaN
+
+//
+
+Math.floor(1.9);  // 1
+Math.floor(9.1);  // 9
+Math.floor(-1.9); // -2
+Math.floor(-9.1); // -10
+Math.floor(1);    // 1
+Math.floor();     // NaN
+
+//
+
+Math.sqrt(9);  // 3
+Math.sqrt(-9); // NaN
+Math.sqrt(2);  // 1.414213562373095
+Math.sqrt(1);  // 1
+Math.sqrt(0);  // 0
+Math.sqrt();   // NaN
+
+//
+
+console.log(Math.random()); //0.8783158693612994
+console.log(Math.random()); //0.5035764564166014
+console.log(Math.random()); //0.5401335854352005
+console.log(Math.random()); //0.20211878096296343
+
+//
+
+Math.pow(2, 8);  // 256
+Math.pow(2, -1); // 0.5
+Math.pow(2);     // NaN
+
+// ES7(ECMAScript 2016) Exponentiation operator(거듭 제곱 연산자)
+2 ** 8; // 256
+
+//
+
+Math.max(1, 2, 3); // 3
+
+// 배열 요소 중에서 최대값 취득
+const arr = [1, 2, 3];
+const max = Math.max.apply(null, arr); // 3
+
+// ES6 Spread operator
+Math.max(...arr); // 3
+
+//
+
+Math.min(1, 2, 3); // 1
+
+// 배열 요소 중에서 최소값 취득
+const arr = [1, 2, 3];
+const min = Math.min.apply(null, arr); // 1
+
+// ES6 Spread operator
+Math.min(...arr); // 1
