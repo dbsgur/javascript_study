@@ -213,7 +213,7 @@ this === global // true
 document.querySelector("#id")
 ```
 
-그러나 사용자가 정의한 변수와 전역 개겣의 자식객체의 이름이 충돌하는 경우, 명확히 전역 객체를 기술하여 혼동을 방지할 수 있다.
+그러나 사용자가 정의한 변수와 전역 객체와 자식객체의 이름이 충돌하는 경우, 명확히 전역 객체를 기술하여 혼동을 방지할 수 있다.
 
 전역 객체는 전역 변수를 프로퍼티로 갖게 된다. 다시 말해 전역 변수는 전역 변수의 프로퍼티이다.
 
@@ -492,7 +492,7 @@ Number.EPSILON은 Javascript에서 표현할 수 있는 가장 작은 수이다.
 ```
 let num = Number.MIN_VALUE;
 let num2 = Number.EPSILON;
-console.log(num > num) // false
+console.log(num > num2) // false
 ```
 
 #### Number.POSITIVE_INFINITY

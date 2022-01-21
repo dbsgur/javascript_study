@@ -131,87 +131,87 @@ console.log(typeof undefined); // undefined
 
 //
 
-var foo = eval('2 + 2');
+var foo = eval("2 + 2");
 console.log(foo); // 4
 
 var x = 5;
 var y = 4;
-console.log(eval('x * y')); // 20
+console.log(eval("x * y")); // 20
 
 //
 
-console.log(isFinite(Infinity));  // false
-console.log(isFinite(NaN));       // false
-console.log(isFinite('Hello'));   // false
-console.log(isFinite('2005/12/12'));   // false
+console.log(isFinite(Infinity)); // false
+console.log(isFinite(NaN)); // false
+console.log(isFinite("Hello")); // false
+console.log(isFinite("2005/12/12")); // false
 
-console.log(isFinite(0));         // true
-console.log(isFinite(2e64));      // true
-console.log(isFinite('10'));      // true: '10' → 10
-console.log(isFinite(null));      // true: null → 0
+console.log(isFinite(0)); // true
+console.log(isFinite(2e64)); // true
+console.log(isFinite("10")); // true: '10' → 10
+console.log(isFinite(null)); // true: null → 0
 
 //
 
 // null이 숫자로 암묵적 강제 형변환이 일어난 경우
-Number(null)  // 0
+Number(null); // 0
 // null이 불리언로 암묵적 강제 형변환이 일어난 경우
-Boolean(null) // false
+Boolean(null); // false
 
 //
 
-isNaN(NaN)       // true
-isNaN(undefined) // true: undefined → NaN
-isNaN({})        // true: {} → NaN
-isNaN('blabla')  // true: 'blabla' → NaN
+isNaN(NaN); // true
+isNaN(undefined); // true: undefined → NaN
+isNaN({}); // true: {} → NaN
+isNaN("blabla"); // true: 'blabla' → NaN
 
-isNaN(true)      // false: true → 1
-isNaN(null)      // false: null → 0
-isNaN(37)        // false
+isNaN(true); // false: true → 1
+isNaN(null); // false: null → 0
+isNaN(37); // false
 
 // strings
-isNaN('37')      // false: '37' → 37
-isNaN('37.37')   // false: '37.37' → 37.37
-isNaN('')        // false: '' → 0
-isNaN(' ')       // false: ' ' → 0
+isNaN("37"); // false: '37' → 37
+isNaN("37.37"); // false: '37.37' → 37.37
+isNaN(""); // false: '' → 0
+isNaN(" "); // false: ' ' → 0
 
 // dates
-isNaN(new Date())             // false: new Date() → Number
-isNaN(new Date().toString())  // true:  String → NaN
+isNaN(new Date()); // false: new Date() → Number
+isNaN(new Date().toString()); // true:  String → NaN
 
 //
 
-parseFloat('3.14');     // 3.14
-parseFloat('10.00');    // 10
-parseFloat('34 45 66'); // 34
-parseFloat(' 60 ');     // 60
-parseFloat('40 years'); // 40
-parseFloat('He was 40') // NaN
+parseFloat("3.14"); // 3.14
+parseFloat("10.00"); // 10
+parseFloat("34 45 66"); // 34
+parseFloat(" 60 "); // 60
+parseFloat("40 years"); // 40
+parseFloat("He was 40"); // NaN
 
 //
 
-parseInt('10', 2);  // 2진수 10 → 10진수 2
-parseInt('10', 8);  // 8진수 10 → 10진수 8
-parseInt('10', 16); // 16진수 10 → 10진수 16
+parseInt("10", 2); // 2진수 10 → 10진수 2
+parseInt("10", 8); // 8진수 10 → 10진수 8
+parseInt("10", 16); // 16진수 10 → 10진수 16
 
 //
 
-parseInt('1A0'));    // 1
-parseInt('102', 2)); // 2
-parseInt('58', 8);   // 5
-parseInt('FG', 16);  // 15
+parseInt("1A0"); // 1
+parseInt("102", 2); // 2
+parseInt("58", 8); // 5
+parseInt("FG", 16); // 15
 
 //
 
-parseInt('34 45 66'); // 34
-parseInt(' 60 ');     // 60
-parseInt('40 years'); // 40
-parseInt('He was 40') // NaN1
+parseInt("34 45 66"); // 34
+parseInt(" 60 "); // 60
+parseInt("40 years"); // 40
+parseInt("He was 40"); // NaN1
 
 //
 
 var x = new Number(123);
-var y = new Number('123');
-var z = new Number('str');
+var y = new Number("123");
+var z = new Number("str");
 
 console.log(x); // 123
 console.log(y); // 123
@@ -219,13 +219,13 @@ console.log(z); // NaN
 
 //
 
-var x = Number('123');
+var x = Number("123");
 
 console.log(typeof x, x); // number 123
 var x = 123;
 var y = new Number(123);
 
-console.log(x == y);  // true
+console.log(x == y); // true
 console.log(x === y); // false
 
 console.log(typeof x); // number
@@ -238,7 +238,7 @@ console.log(0.1 + 0.2 === 0.3); // false
 
 let num = Number.MIN_VALUE;
 let num2 = Number.EPSILON;
-console.log(num > num) // false
+console.log(num > num2); // false
 
 //
 
@@ -246,51 +246,51 @@ console.log(Math.PI); // 3.141592653589793
 
 //
 
-Math.abs(-1);       // 1
-Math.abs('-1');     // 1
-Math.abs('');       // 0
-Math.abs([]);       // 0
-Math.abs(null);     // 0
-Math.abs(undefined);// NaN
-Math.abs({});       // NaN
-Math.abs('string'); // NaN
-Math.abs();         // NaN
+Math.abs(-1); // 1
+Math.abs("-1"); // 1
+Math.abs(""); // 0
+Math.abs([]); // 0
+Math.abs(null); // 0
+Math.abs(undefined); // NaN
+Math.abs({}); // NaN
+Math.abs("string"); // NaN
+Math.abs(); // NaN
 
 //
 
-Math.round(1.4);  // 1
-Math.round(1.6);  // 2
+Math.round(1.4); // 1
+Math.round(1.6); // 2
 Math.round(-1.4); // -1
 Math.round(-1.6); // -2
-Math.round(1);    // 1
-Math.round();     // NaN
+Math.round(1); // 1
+Math.round(); // NaN
 
 //
 
-Math.ceil(1.4);  // 2
-Math.ceil(1.6);  // 2
+Math.ceil(1.4); // 2
+Math.ceil(1.6); // 2
 Math.ceil(-1.4); // -1
 Math.ceil(-1.6); // -1
-Math.ceil(1);    // 1
-Math.ceil();     // NaN
+Math.ceil(1); // 1
+Math.ceil(); // NaN
 
 //
 
-Math.floor(1.9);  // 1
-Math.floor(9.1);  // 9
+Math.floor(1.9); // 1
+Math.floor(9.1); // 9
 Math.floor(-1.9); // -2
 Math.floor(-9.1); // -10
-Math.floor(1);    // 1
-Math.floor();     // NaN
+Math.floor(1); // 1
+Math.floor(); // NaN
 
 //
 
-Math.sqrt(9);  // 3
+Math.sqrt(9); // 3
 Math.sqrt(-9); // NaN
-Math.sqrt(2);  // 1.414213562373095
-Math.sqrt(1);  // 1
-Math.sqrt(0);  // 0
-Math.sqrt();   // NaN
+Math.sqrt(2); // 1.414213562373095
+Math.sqrt(1); // 1
+Math.sqrt(0); // 0
+Math.sqrt(); // NaN
 
 //
 
@@ -301,9 +301,9 @@ console.log(Math.random()); //0.20211878096296343
 
 //
 
-Math.pow(2, 8);  // 256
+Math.pow(2, 8); // 256
 Math.pow(2, -1); // 0.5
-Math.pow(2);     // NaN
+Math.pow(2); // NaN
 
 // ES7(ECMAScript 2016) Exponentiation operator(거듭 제곱 연산자)
 2 ** 8; // 256
@@ -329,3 +329,7 @@ const min = Math.min.apply(null, arr); // 1
 
 // ES6 Spread operator
 Math.min(...arr); // 1
+
+//
+
+//약수의 합
