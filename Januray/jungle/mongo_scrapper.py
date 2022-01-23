@@ -45,3 +45,20 @@ for movie in movies:
             'star': star
         }
         db.movies.insert_one(doc)
+
+
+# 영화제목 '매트릭스'의 평점 가져오기
+target_movie = db.movies.find_one({'title': '매트릭스'})
+print(target_movie['star'])
+
+# '매트릭스'의 평점꽈 같은 평점의 영화 제목 가져오기
+target_movie = db.movies.find_one({'title': '매트릭스'})
+target_star = target_movie['star']
+
+movies = list(db.movies.find({'star': target_star}))
+
+for movie in movies:
+    print(movie['title'])
+
+# '매트릭스' 영화 평점 0으로 수정
+db.movies.update_one({'title': '매트릭스'}, {'$set': {'star': '0'}})
