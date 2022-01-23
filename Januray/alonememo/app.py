@@ -5,6 +5,8 @@
 #  flask router
 # pylnt 오류 잡기
 # requests 간편한 HTTP 요청처리를 위해 사용
+# 몽고 디비 실행
+# brew services start mongodb-community
 from pymongo import MongoClient
 from bs4 import BeautifulSoup
 import requests
@@ -43,10 +45,14 @@ def saving():
 
     og_image = soup.select_one('meta[property="og:image"]')
     og_title = soup.select_one('meta[property="og:title"]')
-    og_description = soup.select_one('meta[property="og:description"]')
+    og_descriptions = soup.select('meta[property="og:description"]')
 
+    for og_description in og_descriptions:
+        url_description = og_description['content']
+        if url_description != "" :
+            break
     url_title = og_title['content']
-    url_description = og_description['content']
+    # url_description = og_description['content']
     url_image = og_image['content']
 
     article = {'url': url_receive, 'title': url_title, 'desc': url_description, 'image': url_image,
