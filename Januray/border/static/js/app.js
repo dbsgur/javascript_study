@@ -16,7 +16,7 @@ function onClickSignUp(e) {
       data: { user_id: user_id, user_pwd: user_pwd },
       success: function (response) {
         console.log(response);
-        if (response["result"] == "success") {
+        if (response["result"] == "SUCCESS") {
           // 2. '좋아요 완료!' 얼럿을 띄웁니다.
           alert(response["message"]);
           // 3. 변경된 정보를 반영하기 위해 새로고침합니다.
@@ -41,10 +41,20 @@ function onClickLogIn(e) {
     data: { user_id: user_id, user_pwd: user_pwd },
     success: function (response) {
       console.log(response);
-      alert(response["message"]);
-      if (response["result"] == "success") {
+
+      if (response["result"] == "SUCCESS") {
+        sessionStorage.setItem("userId", user_id);
+        // console.log("user_id : ", user_id);
+        alert(response["message"]);
         window.location.reload();
+      } else {
+        alert(response["message"]);
       }
     },
   });
+}
+
+function onclcikLogOutBtn() {
+  sessionStorage.clear();
+  window.location.reload();
 }

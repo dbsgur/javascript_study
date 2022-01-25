@@ -26,7 +26,7 @@ def signup():
     # id 중복확인
     if db.board.count_documents({'user_id':user_id}) == 0 :
         db.board.insert_one({'user_id':user_id, 'user_pwd': user_pwd})
-        return jsonify({'result':'success', 'message':'SIGN UP SUCCESS'})
+        return jsonify({'result':'SUCCESS', 'message':'SIGN UP SUCCESS'})
     else :
         return jsonify({'result': 'FAIL', 'message':'user_id already exists'})
 
