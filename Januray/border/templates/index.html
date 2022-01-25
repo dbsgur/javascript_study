@@ -6,7 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../static/style.css">
   <title>CRUD border</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +24,61 @@
 </head>
 
 <body>
-  <h1>LANDINGPAGE</h1>
+  <text>LANDINGPAGE</text>
   <text>fff</text>
+  <!-- USER form -->
+  <div>
+    <button type="button" class="btn btn-primary">LOG IN</button>
+    <button type="button" class="btn btn-info">SIGN UP</button>
+  </div>
+
+  <form onsubmit="onClickSignUp(event)">
+    <div class="form-group row">
+      <label for="inputID" class="col-sm-2 col-form-label">ID</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputID" minlength="4" maxlength="12" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="inputPassword" minlength="4" maxlength="12" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPasswordConfirm" class="col-sm-2 col-form-label">Password confirm</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="inputPasswordConfirm" minlength="4" maxlength="12" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <input type="submit" class="btn btn-primary">Sign in</input>
+      </div>
+    </div>
+  </form>
+
+  <form onsubmit="onClickLogIn(event)">
+    <div class="form-group row">
+      <label for="loginId" class="col-sm-2 col-form-label">ID</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="loginId" minlength="4" maxlength="12" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="loginPassword" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="loginPassword" minlength="4" maxlength="12" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <input type="submit" class="btn btn-primary">Sign in</input>
+      </div>
+    </div>
+  </form>
+
   <!-- WEATHER -->
   <div id="weather">
     <span></span>
@@ -28,6 +90,7 @@
     <!-- Navbar -->
     <!-- Navbar in board, news, weather -->
   </div>
+
   <script src="../static/js/app.js"></script>
   <script src="../static//js/weather.js"></script>
 </body>
