@@ -1,9 +1,11 @@
 from pymongo import MongoClient
-
 from flask import Flask, render_template, jsonify, request
+#  pip install flask-bcrypt
+from flask.ext.bcrypt import Bcrypt
+
 
 app = Flask(__name__)
-
+bcrypt = Bcrypt(app)
 client = MongoClient('localhost', 27017)
 db = client.dbborder
 
