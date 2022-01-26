@@ -12,8 +12,12 @@ Extension : Code Runner, Live Server
 
 ### January
 
+summary
+
+```
 January's diary
 I want to learn Javascript priciple of operation
+```
 
 12 : 브라우저의 핵심 기능, (함수, 객체, 배열)의 기본, data type
 
@@ -37,17 +41,27 @@ Math 객체
 
 ### flask
 
+summary
+
+```
 Html Js css + flask
 small project
+```
 
 - jungle
-  : usage
+  - usage
 - alonememo
-  : article web scrapping
+  - article web scrapping
 - moviestar
-  : actor(web scrapping) popular vote
+  - actor(web scrapping) popular vote
 - boarder
-  : today's my city weather use weather API
-  : Sign up + Sign in (암호화는 진행 예정)
-  : Today's Hot News (진행 예정)
-  : CRUD boarder (진행 예정)
+  - today's my city weather use weather API
+  - Sign up + Sign in (암호화는 진행 예정)
+  - Today's Hot News (진행 예정)
+  - CRUD boarder (진행 예정)
+
+### CodingTest
+
+programmers coding test
+
+Lv1, Lv2, Lv3 ...!!
