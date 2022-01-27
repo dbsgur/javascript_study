@@ -4,6 +4,7 @@ let signupForm = document.querySelector("#signupform");
 let loginForm = document.querySelector("#loginform");
 
 function status() {
+  // jwt 토큰 만료했는지 확인하고
   let userState = sessionStorage.getItem("userId");
   console.log(userState);
   if (userState === null) {

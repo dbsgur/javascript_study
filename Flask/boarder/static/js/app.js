@@ -33,21 +33,22 @@ function onClickLogIn(e) {
   e.preventDefault();
   let user_id = $("#loginId").val();
   let user_pwd = $("#loginPassword").val();
-  console.log(user_id, user_pwd);
+  console.log("front id", user_id, user_pwd);
   $.ajax({
     type: "POST",
     url: "/user/login",
     //user_id , user_pwd
     data: { user_id: user_id, user_pwd: user_pwd },
     success: function (response) {
-      console.log(response);
-
-      if (response["result"] == "SUCCESS") {
+      console.log("back id", response);
+      if (response["result"] === "SUCCESS") {
         sessionStorage.setItem("userId", user_id);
         // console.log("user_id : ", user_id);
         alert(response["message"]);
         window.location.reload();
       } else {
+        // 401 에러일때 예외처리
+        // alert("WRONG ID");
         alert(response["message"]);
       }
     },
@@ -57,4 +58,12 @@ function onClickLogIn(e) {
 function onclcikLogOutBtn() {
   sessionStorage.clear();
   window.location.reload();
+  $.ajax({
+    type: "POST",
+    url: "user/logout",
+    data: {},
+    success: function (response) {
+      alert(response["message"]);
+    },
+  });
 }
