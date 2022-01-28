@@ -6,7 +6,6 @@ client = MongoClient('localhost', 27017)
 db = client.dbborder
 
 
-# DB에 저장할 영화인들의 출처 url을 가져옵니다.
 def get_urls():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
@@ -46,9 +45,9 @@ def get_info(url):
     desc = soup.select_one('meta[property="og:description"]')['content']
     article = soup.select_one('meta[property="og:article:author"]')['content']
 
-    doc = {'title': title, 'image': image, 'desc': desc, 'article': article}
+    doc = {'title': title, 'image': image, 'desc': desc, 'article': article, 'url':url}
 
-    db.board.insert_one(doc)
+    db.news.insert_one(doc)
 
     print('완료!', title)
     return 0
@@ -56,7 +55,7 @@ def get_info(url):
 
 # 기존 mystar 콜렉션을 삭제하고, 출처 url들을 가져온 후, 크롤링하여 DB에 저장합니다.
 def insert_all():
-    db.board.drop()
+    db.news.drop()
     urls = get_urls()
     for url in urls:
         get_info(url)

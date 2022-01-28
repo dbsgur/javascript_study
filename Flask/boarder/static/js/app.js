@@ -60,10 +60,18 @@ function onclcikLogOutBtn() {
   window.location.reload();
   $.ajax({
     type: "POST",
-    url: "user/logout",
+    url: "/user/logout",
     data: {},
     success: function (response) {
       alert(response["message"]);
     },
   });
+}
+
+function onclickHotNewsBtn() {
+  window.location.href = "/news";
+}
+
+function onclickBoardBtn() {
+  window.location.href = "/board";
 }

@@ -14,7 +14,7 @@
 body {
   background-image: url("./images/4.jpeg");
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   /* background-image가 컨테이너를 가득 채우지 못할 경우에도 반복하지 않는다. */
   background-repeat: no-repeat;
   /* 사이즈가 container에 맞지 않아도 꽉 차도록 채운다. */
@@ -33,4 +33,12 @@ body {
 
 .hidden {
   display: none;
+}
+.card-text {
+  color: #302a2a;
+}
+
+.card-columns {
+  margin-left: 15px;
+  margin-right: 15px;
 }

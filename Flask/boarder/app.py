@@ -65,6 +65,13 @@ def board():
     # current_user = get_jwt_identity()
     return render_template('board.html'), 200
 
+@app.route('/news')
+@jwt_required()
+def news():
+    # current_user = get_jwt_identity()
+    return render_template('news.html'), 200
+
+
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
 @app.route("/protected", methods=["GET"])
@@ -88,8 +95,8 @@ def signup():
     user_pwd = request.form['user_pwd']
     pw_hash = generate_password_hash(user_pwd, 10)
     # id 중복확인
-    if db.board.count_documents({'user_id': user_id}) == 0:
-        db.board.insert_one({'user_id': user_id, 'user_pwd': pw_hash})
+    if db.user.count_documents({'user_id': user_id}) == 0:
+        db.user.insert_one({'user_id': user_id, 'user_pwd': pw_hash})
         return jsonify({'result': 'SUCCESS', 'message': 'SIGN UP SUCCESS'})
     else:
         return jsonify({'result': 'FAIL', 'message': 'user_id already exists'})
@@ -103,13 +110,13 @@ def login():
     user_id = request.form['user_id']
     user_pwd = request.form['user_pwd']
     # id 확인
-    if db.board.count_documents({'user_id': user_id}) == 0:
+    if db.user.count_documents({'user_id': user_id}) == 0:
         # 401 error : 인증 자격 없음
         return jsonify({'result': 'FAIL', 'message': 'WRONG ID'}) #, 401
     # else:
         # 비번 확인
         # count_documents VS findone?
-    check_pwd = db.board.find_one({"user_id":user_id})
+    check_pwd = db.user.find_one({"user_id":user_id})
     if check_password_hash(check_pwd.get('user_pwd'), user_pwd):
         response = jsonify({'result': 'SUCCESS', 'message': 'LOGIN SUCCESS'})
         access_token = create_access_token(identity=user_id)
@@ -129,6 +136,12 @@ def logout():
     response = jsonify({"message": "LOGOUT SUCCESS"})
     unset_jwt_cookies(response)
     return response
+
+
+@app.route('/news/read', methods=["GET"])
+def read_news():
+    news = list(db.news.find({},{'_id':False}))
+    return jsonify({'result':'SUCCESS','news_list': news, 'message': 'NEWS READ SUCCESS '})
 
 
 if __name__ == '__main__':
