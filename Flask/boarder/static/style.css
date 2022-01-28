@@ -13,8 +13,14 @@
 
 body {
   background-image: url("./images/4.jpeg");
+  width: 100%;
   height: 100vh;
-  width: 100vw;
+  /* background-image가 컨테이너를 가득 채우지 못할 경우에도 반복하지 않는다. */
+  background-repeat: no-repeat;
+  /* 사이즈가 container에 맞지 않아도 꽉 차도록 채운다. */
+  background-size: cover;
+  /* background-image가 컨테이너에 가운데로 오도록 한다.  */
+  background-position: center;
   display: flex;
   flex-direction: column;
   justify-content: center;

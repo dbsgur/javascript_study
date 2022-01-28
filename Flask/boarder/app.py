@@ -25,11 +25,12 @@ app = Flask(__name__)
 app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_SECRET_KEY"] = "hyuk-is-coding..."
-# app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=1)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+# app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=1)
 # app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=7)
 
 bcrypt = Bcrypt(app)
+# client = MongoClient('mongodb://test:test@localhost',27017)
 client = MongoClient('localhost', 27017)
 db = client.dbborder
 # JWT
@@ -43,7 +44,7 @@ def refresh_expiring_jwts(response):
     try:
         exp_timestamp = get_jwt()["exp"]
         now = datetime.now(timezone.utc)
-        target_timestamp = datetime.timestamp(now + timedelta(minutes=1))
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
         if target_timestamp > exp_timestamp:
             access_token = create_access_token(identity=get_jwt_identity())
             set_access_cookies(response, access_token)
@@ -59,8 +60,10 @@ def home():
 
 
 @app.route('/board')
+@jwt_required()
 def board():
-    return render_template('board.html')
+    # current_user = get_jwt_identity()
+    return render_template('board.html'), 200
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
