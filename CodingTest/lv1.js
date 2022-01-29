@@ -580,3 +580,257 @@ function getDayName(a, b) {
 }
 
 //
+
+//나머지가 1이 되는 수 찾기
+function solution(n) {
+  for (let i = 0; i < n; i++) {
+    if (n % i === 1) {
+      return i;
+    }
+  }
+}
+
+const solution = (n) => {
+  for (let i = 2; i < n; i++) {
+    if (n % i === 1) {
+      return i;
+    }
+  }
+};
+
+//
+
+// 부족한 금액 계싼하기
+function solution(price, money, count) {
+  let sum = 0;
+  for (let i = 1; i <= count; i++) {
+    sum += price * i;
+  }
+  return sum < money ? 0 : sum - money;
+}
+//가우스
+function solution(price, money, count) {
+  const tmp = (price * count * (count + 1)) / 2 - money;
+  return tmp > 0 ? tmp : 0;
+}
+
+//
+
+//최소 직사각형
+function solution(sizes) {
+  let width = sizes.map((x) => x[0]);
+  let heigh = sizes.map((y) => y[1]);
+
+  for (let i = 0; i < sizes.length; i++) {
+    if (width[i] < heigh[i]) {
+      let tmp = width[i];
+      width[i] = heigh[i];
+      heigh[i] = tmp;
+    }
+  }
+
+  return Math.max(...width) * Math.max(...heigh);
+}
+
+function solution(sizes) {
+  const rotated = sizes.map(([w, h]) => (w < h ? [h, w] : [w, h]));
+
+  let maxSize = [0, 0];
+  rotated.forEach(([w, h]) => {
+    if (w > maxSize[0]) maxSize[0] = w;
+    if (h > maxSize[1]) maxSize[1] = h;
+  });
+  return maxSize[0] * maxSize[1];
+}
+
+function solution(sizes) {
+  let w = 0;
+  let h = 0;
+  sizes.forEach((s) => {
+    const [a, b] = s.sort((a, b) => a - b);
+    if (a > h) h = a;
+    if (b > w) w = b;
+  });
+
+  return w * h;
+}
+
+//
+
+// 비밀지도
+function solution(n, arr1, arr2) {
+  var answer = [];
+  for (let i = 0; i < n; i++) {
+    let map1 = arr1[i].toString(2).padStart(n, "0");
+    let map2 = arr2[i].toString(2).padStart(n, "0");
+    let arr = "";
+    for (let j = 0; j < n; j++) {
+      if (map1[j] === "0" && map2[j] === "0") {
+        arr += " ";
+      } else {
+        arr += "#";
+      }
+    }
+    answer.push(arr);
+  }
+  return answer;
+}
+
+var solution = (n, a, b) =>
+  a.map((a, i) =>
+    (a | b[i]).toString(2).padStart(n, 0).replace(/0/g, " ").replace(/1/g, "#")
+  );
+
+//
+
+//두개 뽑아서 더하기
+function solution(numbers) {
+  var answer = [];
+
+  // for (let i =0; i<numbers.length; i++)
+  while (numbers.length !== 0) {
+    let x = numbers.pop();
+    for (let j = 0; j < numbers.length; j++) {
+      answer.push(x + numbers[j]);
+    }
+  }
+  answer.sort((a, b) => a - b);
+
+  return answer.filter((el, i) => answer.indexOf(el) === i);
+  // return numbers.sort((a,b)=>a-b);
+}
+
+function solution(numbers) {
+  const temp = [];
+
+  for (let i = 0; i < numbers.length; i++) {
+    for (let j = i + 1; j < numbers.length; j++) {
+      temp.push(numbers[i] + numbers[j]);
+    }
+  }
+
+  const answer = [...new Set(temp)];
+
+  return answer.sort((a, b) => a - b);
+}
+
+function solution(numbers) {
+  var answer = [];
+  numbers = numbers.sort();
+  console.log(numbers);
+  for (var i = 0; i < numbers.length; i++) {
+    for (var k = i + 1; k < numbers.length; k++) {
+      if (!answer.includes(numbers[i] + numbers[k])) {
+        answer.push(numbers[i] + numbers[k]);
+      }
+    }
+  }
+  answer = answer.sort(function (a, b) {
+    return a - b;
+  });
+  return answer;
+}
+
+//
+
+// 완주하지 못한 선수
+function solution(participant, completion) {
+  participant.sort();
+  completion.sort();
+  for (let i in participant) {
+    if (participant[i] !== completion[i]) {
+      return participant[i];
+    }
+  }
+}
+
+//
+
+//k번째 수
+function solution(array, commands) {
+  var answer = [];
+  for (let i = 0; i < commands.length; i++) {
+    let tmp = array
+      .slice(commands[i][0] - 1, commands[i][1])
+      .sort((a, b) => a - b);
+    answer.push(tmp[commands[i][2] - 1]);
+  }
+  return answer;
+}
+
+function solution(array, commands) {
+  return commands.map((command) => {
+    const [sPosition, ePosition, position] = command;
+    const newArray = array
+      .filter(
+        (value, fIndex) => fIndex >= sPosition - 1 && fIndex <= ePosition - 1
+      )
+      .sort((a, b) => a - b);
+
+    return newArray[position - 1];
+  });
+}
+function solution(array, commands) {
+  var answer = [];
+
+  answer = commands.map((a) => {
+    return array.slice(a[0] - 1, a[1]).sort((b, c) => b - c)[a[2] - 1];
+  });
+  return answer;
+}
+
+//
+
+//없는 숫자 더하기
+function solution(numbers) {
+  let sum = numbers.reduce((pre, next) => pre + next);
+  return 45 - sum;
+}
+function solution(numbers) {
+  var allNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  return allNum
+    .filter((x) => !numbers.includes(x))
+    .reduce((acc, sum) => (acc += sum));
+}
+
+function solution(numbers) {
+  let answer = 0;
+
+  for (let i = 0; i <= 9; i++) {
+    if (!numbers.includes(i)) answer += i;
+  }
+
+  return answer;
+}
+
+// includes < filter < for
+
+//
+
+//예산
+function solution(d, budget) {
+  d.sort((a, b) => a - b);
+
+  let result = 0;
+
+  for (let i = 0; result <= budget; i++) {
+    if (result + d[i] <= budget) {
+      result += d[i];
+      continue;
+    }
+
+    return i;
+  }
+}
+function solution(d, budget) {
+  let answer = 0;
+  let money = 0;
+  d.sort((a, b) => a - b).forEach(function (val) {
+    money += val;
+    if (money <= budget) {
+      answer++;
+    }
+  });
+  return answer;
+}
