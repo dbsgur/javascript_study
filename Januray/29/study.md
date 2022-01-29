@@ -558,7 +558,7 @@ insertAjacentHTML()
 |`삽입되는 위치를 선정할 수 있다.`|``|
 
 **!! innerHTML과 insertAjacentHTML()은 크로스 스크립팅 공격(XSS)에 취약하다. 따라서 untrusted data의 경우 주의해야한다.**
-**텍스트를 추가 또는 변경시에는 textContext, 새로운 요소의 추가 또는 삭제시에는 DOM 조작 방식을 사용하도록 한다.**
+**텍스트를 추가 또는 변경시에는 textContent, 새로운 요소의 추가 또는 삭제시에는 DOM 조작 방식을 사용하도록 한다.**
 
 ### style
 

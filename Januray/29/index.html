@@ -212,3 +212,32 @@
 </body>
 
 </html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <br /><br /><br /><br /><br /><br /><br /><br /><br />
+  <input class="secret" type="password" value="123">
+  <button class="view" onclick="onclickBtn()">show</button>
+  <script>
+    const $secret = document.querySelector('.secret');
+    const $view = document.querySelector('.view');
+
+    function onclickBtn() {
+      console.log("혁이는");
+      let isShow = false;
+      return function () {
+        console.log("코딩 중...");
+        $secret.setAttribute('type', isShow ? 'password' : 'text');
+        isShow = !isShow;
+        $view.innerHTML = isShow ? 'hide' : 'show';
+      };
+    }
+
+  </script>
+</body>
+
+</html>
