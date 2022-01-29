@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .red {
+      color: #ff0000;
+    }
+
+    .blue {
+      color: #0000ff;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Cities</h1>
+    <ul>
+      <li id="one" class="red">Seoul</li>
+      <li id="two" class="red">London</li>
+      <li id="three" class="red">Newyork</li>
+      <li id="four">Tokyo</li>
+    </ul>
+  </div>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <input type="text">
+  <script>
+    const input = document.querySelector('input[type=text]');
+    console.log(input);
+
+    // value 어트리뷰트가 존재하지 않으면
+    if (!input.hasAttribute('value')) {
+      // value 어트리뷰트를 추가하고 값으로 'hello!'를 설정
+      input.setAttribute('value', 'hello!');
+    }
+
+    // value 어트리뷰트 값을 취득
+    console.log(input.getAttribute('value')); // hello!
+
+    // value 어트리뷰트를 제거
+    input.removeAttribute('value');
+
+    // value 어트리뷰트의 존재를 확인
+    console.log(input.hasAttribute('value')); // false
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+<script>
+  const testVtn = function () {
+    console.log("test3");
+    return function () {
+      console.log("test4");
+    }
+  }
+</script>
+
+<body>
+  <input class="password" type="password" value="123">
+  <button onclick="makeClickHandler()" class="show">show</button>
+  <button onclick="testBtn()">TEST</button>
+  <button onclick="testVtn()">TEST</button>
+  <script>
+    const $password = document.querySelector('.password');
+    const $show = document.querySelector('.show');
+
+
+
+    function testBtn() {
+      console.log("test1");
+      return function plz() {
+        console.log("test2");
+      }
+    }
+    function makeClickHandler() {
+      console.log("!!!");
+      let isShow = false;
+      return function () {
+        console.log("@@@");
+        //? why dont' work
+        $password.setAttribute('type', isShow ? 'password' : 'text');
+        isShow = !isShow;
+        $show.innerHTML = isShow ? 'hide' : 'show';
+      };
+    }
+
+    // $show.onclick = makeClickHandler();
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .red {
+      color: #ff0000;
+    }
+
+    .blue {
+      color: #0000ff;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Cities</h1>
+    <ul>
+      <li id="one" class="red">Seoul</li>
+      <li id="two" class="red">London</li>
+      <li id="three" class="red">Newyork</li>
+      <li id="four">Tokyo</li>
+    </ul>
+  </div>
+  <script>
+    const ul = document.querySelector('ul');
+
+    // 요소의 텍스트 취득
+    console.log(ul.textContent);
+    /*
+            Seoul
+            London
+            Newyork
+            Tokyo
+    */
+
+    const one = document.getElementById('one');
+
+    // 요소의 텍스트 취득
+    console.log(one.textContent); // Seoul
+
+    // 요소의 텍스트 변경
+    one.textContent += ', Korea';
+
+    console.log(one.textContent); // Seoul, Korea
+
+    // 요소의 마크업이 포함된 콘텐츠 변경.
+    one.textContent = '<h1>Heading</h1>';
+
+    // 마크업이 문자열로 표시된다.
+    console.log(one.textContent); // <h1>Heading</h1>
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>style 프로퍼티 값 취득</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 50px;
+      background-color: red;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+  <script>
+    const box = document.querySelector('.box');
+
+    const width = getStyle(box, 'width');
+    const height = getStyle(box, 'height');
+    const backgroundColor = getStyle(box, 'background-color');
+    const border = getStyle(box, 'border');
+
+    console.log('width: ' + width);
+    console.log('height: ' + height);
+    console.log('backgroundColor: ' + backgroundColor);
+    console.log('border: ' + border);
+
+    /**
+     * 요소에 적용된 CSS 프로퍼티를 반환한다.
+     * @param {HTTPElement} elem - 대상 요소 노드.
+     * @param {string} prop - 대상 CSS 프로퍼티.
+     * @returns {string} CSS 프로퍼티의 값.
+     */
+    function getStyle(elem, prop) {
+      return window.getComputedStyle(elem, null).getPropertyValue(prop);
+    }
+  </script>
+</body>
+
+</html>
