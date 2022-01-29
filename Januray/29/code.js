@@ -131,3 +131,40 @@ four.style.color = "blue";
 four.style.fontSize = "2em";
 
 //
+
+function func1() {
+  console.log("func1");
+  func2();
+}
+
+function func2() {
+  console.log("func2");
+  func3();
+}
+
+function func3() {
+  console.log("func3");
+}
+
+func1(); // func1 func2 func3
+
+//
+
+function func1() {
+  console.log("func1");
+  func2();
+}
+
+function func2() {
+  setTimeout(function () {
+    console.log("func2");
+  }, 0);
+
+  func3();
+}
+
+function func3() {
+  console.log("func3");
+}
+
+func1(); // func1 func3 func2
