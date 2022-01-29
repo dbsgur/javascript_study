@@ -679,3 +679,5 @@ function func3() {
 
 func1(); // func1 func3 func2
 ```
+
+setTimeout의 콜백함수는 즉시 실행되지 않고 지정 대기 시간만큼 기다리다가 "tick" 이벤트가 발생하면 태스크 큐로 이동한 후 Call Stack이 비어졌을 때 Call Stack으로 이동되어 실행한다.
