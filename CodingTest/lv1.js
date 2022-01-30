@@ -834,3 +834,166 @@ function solution(d, budget) {
   });
   return answer;
 }
+
+//
+
+//체육복
+function solution(n, lost, reserve) {
+  lost.sort((a, b) => a - b);
+  reserve.sort((a, b) => a - b);
+  let answer = n - lost.length;
+  for (let i = 0; i < lost.length; i++) {
+    let find = reserve.find((x) => x === lost[i]);
+    if (find) {
+      reserve = reserve.filter((x) => x !== find);
+      lost = lost.filter((x) => x !== find);
+      answer += 1;
+      i--;
+    }
+  }
+  for (let i = 0; i < lost.length; i++) {
+    let find = reserve.find((x) => x === lost[i] - 1 || x === lost[i] + 1);
+    if (find) {
+      reserve = reserve.filter((x) => x !== find);
+      lost = lost.filter((x) => x !== find);
+      answer += 1;
+    }
+  }
+  return answer;
+}
+
+function solution(n, lost, reserve) {
+  const students = {};
+  let answer = 0;
+  for (let i = 1; i <= n; i++) {
+    students[i] = 1;
+  }
+  lost.forEach((number) => (students[number] -= 1));
+  reserve.forEach((number) => (students[number] += 1));
+
+  for (let i = 1; i <= n; i++) {
+    if (students[i] === 2 && students[i - 1] === 0) {
+      students[i - 1]++;
+      students[i]--;
+    } else if (students[i] === 2 && students[i + 1] === 0) {
+      students[i + 1]++;
+      students[i]--;
+    }
+  }
+  for (let key in students) {
+    if (students[key] >= 1) {
+      answer++;
+    }
+  }
+  return answer;
+}
+
+//
+
+// 실패율
+function solution(N, stages) {
+  var answer = [];
+  let fails = [];
+  // 해당 스테이지랑 번호가 같은 사람 = 못깬사람
+  // let loser = stages.filter(x=> x === stage)
+  // 해당 스테이지랑 번호가 같거나 큰사람 = 도달한 유저
+  // let user = stages.filter(x=> x >= stage)
+  // 실패율 = 못깬 사람 / 도달한 유저
+  // let fail = loser / user
+  for (let stage = 1; stage <= N; stage++) {
+    let loser = stages.filter((x) => x === stage).length;
+    let user = stages.filter((x) => x >= stage).length;
+    // console.log(loser/user)
+    fails.push([stage, loser / user]);
+  }
+  // 실패율 큰 순으로 정렬
+  fails.sort((a, b) => b[1] - a[1]);
+  // 같다면 오름차순으로 정렬 -> 이미 오름차순이므로 생략
+  return fails.map((x) => x[0]);
+}
+unction solution(N, stages) {
+  const obj = {}
+  for(let i=1; i<=N; i++) {
+      obj[i] = 0;
+  }
+
+  // 스테이지에 머물고있는 인원 파악
+  stages.forEach((v) => {
+      if(v !== N+1) {
+      obj[v] += 1;
+      }
+  })
+
+  // 계산
+  let stay = 0;
+  let stayed = stages.length;
+  const failPercentageArr = [];
+  for(let key in obj) {
+      stay = obj[key];
+      console.log(stay, '/', stayed);
+      if(stayed == 0 || stay == 0) {
+          failPercentageArr.push({stage: key, fail: 0});            
+      } else {
+          failPercentageArr.push({stage: key, fail: stay/stayed});
+      }
+      stayed = stayed - stay;
+  }
+
+  // 정렬
+  failPercentageArr.sort((a,b) => {
+      if (b.fail > a.fail) {
+          return 1;
+      } else if (b.fail < a.fail) {
+          return -1;
+      } else if (b.fail == a.fail) {
+          return a.stage - b.stage
+      }
+  })
+
+  return failPercentageArr.map((v) => {
+      return Number(v.stage);
+  })
+}
+
+//
+
+// 크레인 인형뽑기
+function solution(board, moves) {
+  var answer = 0;
+  let arr = []
+  for(let i = 0; i < moves.length; i++){
+      for(let j = 0; j < board.length;j++){
+          if(board[j][moves[i]-1] !== 0){
+              arr.push(board[j][moves[i]-1])
+              board[j][moves[i]-1] = 0
+              break;
+          }
+      }
+      if (arr.length >=2){
+          if (arr[arr.length-1] === arr[arr.length-2]){
+              answer +=2
+              arr.splice(arr.length-2,2)
+
+          }
+      } 
+  }
+  return answer;
+}
+function solution(board, moves) {
+  var answer = 0;
+  var arr = new Array();
+
+  for(var m = 0; m<moves.length; m++){
+      for(var i = 0; i<board.length; i++){
+          if(board[i][moves[m]-1]){
+              if(arr[arr.length-1] == board[i][moves[m]-1])
+                  answer+=2, arr.pop();
+              else
+                  arr.push(board[i][moves[m]-1]);
+              board[i][moves[m]-1] = 0;
+              break;
+          }
+      }
+  }
+  return answer;
+}
