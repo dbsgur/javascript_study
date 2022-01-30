@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <button onclick="myHandler()">Click me</button>
+  <script>
+    function myHandler() {
+      alert('Button clicked!');
+    }
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <button class="btn">Click me</button>
+  <script>
+    const btn = document.querySelector('.btn');
+
+    // 이벤트 핸들러 프로퍼티 방식은 이벤트에 하나의 이벤트 핸들러만을 바인딩할 수 있다
+    // 첫번째 바인딩된 이벤트 핸들러 => 실행되지 않는다.
+    btn.onclick = function () {
+      alert('① Button clicked 1');
+    };
+
+    // 두번째 바인딩된 이벤트 핸들러
+    btn.onclick = function () {
+      alert('① Button clicked 2');
+    };
+
+    // addEventListener 메소드 방식
+    // 첫번째 바인딩된 이벤트 핸들러
+    btn.addEventListener('click', function () {
+      alert('② Button clicked 1');
+    });
+
+    // 두번째 바인딩된 이벤트 핸들러
+    btn.addEventListener('click', function () {
+      alert('② Button clicked 2');
+    });
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <button onclick="foo()">Button</button>
+  <script>
+    function foo() {
+      console.log(this); // window
+    }
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <button class="btn">Button</button>
+  <script>
+    const btn = document.querySelector('.btn');
+
+    btn.onclick = function (e) {
+      console.log(this); // <button id="btn">Button</button>
+      console.log(e.currentTarget); // <button id="btn">Button</button>
+      console.log(this === e.currentTarget); // true
+    };
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <button class="btn">Button</button>
+  <script>
+    const btn = document.querySelector('.btn');
+
+    btn.addEventListener('click', function (e) {
+      console.log(this); // <button id="btn">Button</button>
+      console.log(e.currentTarget); // <button id="btn">Button</button>
+      console.log(this === e.currentTarget); // true
+    });
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <div class="container">
+    <button id="btn1">Hide me 1</button>
+    <button id="btn2">Hide me 2</button>
+  </div>
+
+  <script>
+    function hide(e) {
+      e.target.style.visibility = 'hidden';
+      // 동일하게 동작한다.
+      // this.style.visibility = 'hidden';
+    }
+
+    document.getElementById('btn1').addEventListener('click', hide);
+    document.getElementById('btn2').addEventListener('click', hide);
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <div class="container">
+    <button id="btn1">Hide me 1</button>
+    <button id="btn2">Hide me 2</button>
+  </div>
+
+  <script>
+    const container = document.querySelector('.container');
+
+    function hide(e) {
+      // e.target은 실제로 이벤트를 발생시킨 DOM 요소를 가리킨다.
+      e.target.style.visibility = 'hidden';
+      // this는 이벤트에 바인딩된 DOM 요소(.container)를 가리킨다. 따라서 .container 요소를 감춘다.
+      // this.style.visibility = 'hidden';
+    }
+
+    container.addEventListener('click', hide);
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    div {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <button>배경색 변경</button>
+  </div>
+  <script>
+    function bluify(e) {
+      // this: 이벤트에 바인딩된 DOM 요소(div 요소)
+      console.log('this: ', this);
+      // target: 실제로 이벤트를 발생시킨 요소(button 요소 또는 div 요소)
+      console.log('e.target:', e.target);
+      // currentTarget: 이벤트에 바인딩된 DOM 요소(div 요소)
+      console.log('e.currentTarget: ', e.currentTarget);
+
+      // 언제나 true
+      console.log(this === e.currentTarget);
+      // currentTarget과 target이 같은 객체일 때 true
+      console.log(this === e.target);
+
+      // click 이벤트가 발생하면 이벤트를 발생시킨 요소(target)과는 상관없이 this(이벤트에 바인딩된 div 요소)의 배경색이 변경된다.
+      this.style.backgroundColor = '#A5D9F3';
+    }
+
+    // div 요소에 이벤트 핸들러가 바인딩되어 있다.
+    // 자식 요소인 button이 발생시킨 이벤트가 버블링되어 div 요소에도 전파된다.
+    // 따라서 div 요소에 이벤트 핸들러가 바인딩되어 있으면 자식 요소인 button이 발생시킨 이벤트를 div 요소에서도 핸들링할 수 있다.
+    document.querySelector('div').addEventListener('click', bluify);
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+<!DOCTYPE html>
+<html>
+
+<body>
+  <p>키를 입력하세요</p>
+  <em class="message"></em>
+  <script>
+    const body = document.querySelector('body');
+
+    function getEventType(e) {
+      console.log(e);
+      document.querySelector('.message').innerHTML = `${e.type} : ${e.keyCode}`;
+    }
+
+    body.addEventListener('keydown', getEventType);
+    body.addEventListener('keyup', getEventType);
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+!DOCTYPE html>
+<html>
+
+<body>
+  <a href="poiemaweb.com">Go to poiemaweb.com</a>
+  <script>
+    const elem = document.querySelector('a');
+
+    elem.addEventListener('click', function (e) {
+      console.log(e.cancelable); // true
+
+      // 기본 동작을 중단시킨다.
+      e.preventDefault();
+    });
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <ul class="post-list">
+    <li id="post-1">Item 1</li>
+    <li id="post-2">Item 2</li>
+    <li id="post-3">Item 3</li>
+    <li id="post-4">Item 4</li>
+    <li id="post-5">Item 5</li>
+    <li id="post-6">Item 6</li>
+  </ul>
+  <div class="msg">
+    <script>
+      const msg = document.querySelector('.msg');
+      const list = document.querySelector('.post-list')
+
+      list.addEventListener('click', function (e) {
+        // 이벤트를 발생시킨 요소
+        console.log('[target]: ' + e.target);
+        // 이벤트를 발생시킨 요소의 nodeName
+        console.log('[target.nodeName]: ' + e.target.nodeName);
+
+        // li 요소 이외의 요소에서 발생한 이벤트는 대응하지 않는다.
+        if (e.target && e.target.nodeName === 'LI') {
+          msg.innerHTML = 'li#' + e.target.id + ' was clicked!';
+        }
+      });
+    </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <p>버튼을 클릭하면 이벤트 전파를 중단한다. <button>버튼</button></p>
+  <script>
+    const body = document.querySelector('body');
+    const para = document.querySelector('p');
+    const button = document.querySelector('button');
+
+    // 버블링
+    body.addEventListener('click', function () {
+      console.log('Handler for body.');
+    });
+
+    // 버블링
+    para.addEventListener('click', function () {
+      console.log('Handler for paragraph.');
+    });
+
+    // 버블링
+    button.addEventListener('click', function (event) {
+      console.log('Handler for button.');
+
+      // 이벤트 전파를 중단한다.
+      event.stopPropagation();
+    });
+  </script>
+</body>
+
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <a href="http://www.google.com" onclick='return handleEvent()'>go</a>
+  <script>
+    function handleEvent() {
+      return false;
+    }
+  </script>
+</body>
+
+</html>
+
+<!--  -->
