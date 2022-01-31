@@ -72,7 +72,7 @@
 
 <body>
   <input class="password" type="password" value="123">
-  <button onclick="makeClickHandler()" class="show">show</button>
+  <button class="show">show</button>
   <button onclick="testBtn()">TEST</button>
   <button onclick="testVtn()">TEST</button>
   <script>
@@ -98,7 +98,7 @@
         $show.innerHTML = isShow ? 'hide' : 'show';
       };
     }
-
+    $show.addEventListener('click', makeClickHandler())
     // $show.onclick = makeClickHandler();
   </script>
 </body>
@@ -221,13 +221,12 @@
 <body>
   <br /><br /><br /><br /><br /><br /><br /><br /><br />
   <input class="secret" type="password" value="123">
-  <button class="view" onclick="onclickBtn()">show</button>
+  <button class="view">show</button>
   <script>
     const $secret = document.querySelector('.secret');
     const $view = document.querySelector('.view');
 
     function onclickBtn() {
-      console.log("혁이는");
       let isShow = false;
       return function () {
         console.log("코딩 중...");
@@ -236,7 +235,14 @@
         $view.innerHTML = isShow ? 'hide' : 'show';
       };
     }
+    function onclickBtn2() {
+      console.log("222");
+    }
 
+    // $view.onclick = onclickBtn();
+    // $view.onclick = onclickBtn2;
+    $view.addEventListener('click', onclickBtn2)
+    $view.addEventListener('click', onclickBtn())
   </script>
 </body>
 
