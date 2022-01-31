@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <script>
+    // 비동기 함수
+    function get(url) {
+      // XMLHttpRequest 객체 생성
+      const xhr = new XMLHttpRequest();
+
+      // 서버 응답 시 호출될 이벤트 핸들러
+      xhr.onreadystatechange = function () {
+        // 서버 응답 완료가 아니면 무시
+        if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+        if (xhr.status === 200) { // 정상 응답
+          console.log(xhr.response);
+          // 비동기 함수의 결과에 대한 처리는 반환할 수 없다.
+          return xhr.response; // ①
+        } else { // 비정상 응답
+          console.log('Error: ' + xhr.status);
+        }
+      };
+
+      // 비동기 방식으로 Request 오픈
+      xhr.open('GET', url);
+      // Request 전송
+      xhr.send();
+    }
+
+    // 비동기 함수 내의 readystatechange 이벤트 핸들러에서 처리 결과를 반환(①)하면 순서가 보장되지 않는다.
+    const res = get('http://jsonplaceholder.typicode.com/posts/1');
+    console.log(res); // ② undefined
+  </script>
+</body>
+
+</html>
+
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <!DOCTYPE html>
+  <html>
+
+  <body>
+    <pre class="result"></pre>
+    <script>
+      const $result = document.querySelector('.result');
+      const render = content => { $result.textContent = JSON.stringify(content, null, 2); };
+
+      const promiseAjax = (method, url, payload) => {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open(method, url);
+          xhr.setRequestHeader('Content-type', 'application/json');
+          xhr.send(JSON.stringify(payload));
+
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+            if (xhr.status >= 200 && xhr.status < 400) {
+              resolve(xhr.response); // Success!
+            } else {
+              reject(new Error(xhr.status)); // Failed...
+            }
+          };
+        });
+      };
+
+      /*
+        비동기 함수 promiseAjax은 Promise 객체를 반환한다.
+        Promise 객체의 후속 메소드를 사용하여 비동기 처리 결과에 대한 후속 처리를 수행한다.
+      */
+      promiseAjax('GET', 'http://jsonplaceholder.typicode.com/posts/1')
+        .then(JSON.parse)
+        .then(
+          // 첫 번째 콜백 함수는 성공(fulfilled, resolve 함수가 호출된 상태) 시 호출된다.
+          render,
+          // 두 번째 함수는 실패(rejected, reject 함수가 호출된 상태) 시 호출된다.
+          console.error
+        );
+    </script>
+  </body>
+
+  </html>
+
+  <!--  -->
+
+  <!DOCTYPE html>
+  <html>
+
+  <body>
+    <pre class="result"></pre>
+    <script>
+      const $result = document.querySelector('.result');
+      const render = content => { $result.textContent = JSON.stringify(content, null, 2); };
+
+      const promiseAjax = (method, url, payload) => {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open(method, url);
+          xhr.setRequestHeader('Content-type', 'application/json');
+          xhr.send(JSON.stringify(payload));
+
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+            if (xhr.status >= 200 && xhr.status < 400) {
+              resolve(xhr.response); // Success!
+            } else {
+              reject(new Error(xhr.status)); // Failed...
+            }
+          };
+        });
+      };
+
+      const url = 'http://jsonplaceholder.typicode.com/posts';
+
+      // 포스트 id가 1인 포스트를 검색하고 프로미스를 반환한다.
+      promiseAjax('GET', `${url}/1`)
+        // 포스트 id가 1인 포스트를 작성한 사용자의 아이디로 작성된 모든 포스트를 검색하고 프로미스를 반환한다.
+        .then(res => promiseAjax('GET', `${url}?userId=${JSON.parse(res).userId}`))
+        .then(JSON.parse)
+        .then(render)
+        .catch(console.error);
+    </script>
+  </body>
+
+  </html>
