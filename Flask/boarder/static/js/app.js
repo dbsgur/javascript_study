@@ -37,12 +37,12 @@ function onClickLogIn(e) {
   $.ajax({
     type: "POST",
     url: "/user/login",
-    //user_id , user_pwd
+    // user_id , user_pwd
     data: { user_id: user_id, user_pwd: user_pwd },
     success: function (response) {
       console.log("back id", response);
       if (response["result"] === "SUCCESS") {
-        sessionStorage.setItem("userId", user_id);
+        // sessionStorage.setItem("userId", user_id);
         // console.log("user_id : ", user_id);
         alert(response["message"]);
         window.location.reload();

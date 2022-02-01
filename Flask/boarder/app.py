@@ -53,6 +53,9 @@ def refresh_expiring_jwts(response):
         # Case where there is not a valid JWT. Just return the original respone
         return response
 
+#####################
+#     ROUTING       #
+#####################
 
 @app.route('/')
 def home():
@@ -85,6 +88,9 @@ def protected():
     # 찾을 수 있을 것이다. 그 사용자 이름. 즉, 식별자 identity를 반환하는 함수다.
     return jsonify(logged_in_as=current_user), 200
 
+#####################
+#      USER         #
+#####################
 # sing up
 
 
@@ -137,12 +143,49 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
+#####################
+#     HOT NEWS      #
+#####################
 
 @app.route('/news/read', methods=["GET"])
 def read_news():
     news = list(db.news.find({},{'_id':False}))
     return jsonify({'result':'SUCCESS','news_list': news, 'message': 'NEWS READ SUCCESS '})
 
+##################
+#     BOARD      #
+##################
+# CREATE
+@app.route('/board/create', methods=["POST"])
+def create_board():
+    # 정보 가져오기 > id, title, content, date, like가 있어야하는뎅? schema 피료없나염
+    user_id = request.form['user_id']
+    post_title = request.form['post_title']
+    post_content = request.form['post_content']
+    # post_date = new Date
+    # 처리 백? 프론트?
+    post_likes = request.form['post_likes']
+    # 저장
+    db.board.insert_one({'user_id': user_id, 'post_title': post_title, 'post_content':post_content, 'post_likes':post_likes})
+    return jsonify({'result':'SUCCESS'})
+
+# READ
+@app.route('/board/read', methods=["GET"])
+def read_board():
+    posts = list(db.board.find({},{'_id':False}))
+    return jsonify({'result':'SUCCESS', 'posts':posts})
+
+# UPDATE
+@app.route('/board/update', methods=["PATCH"])
+def update_board():
+    # post id로 업뎃하는데 어케 받지
+    return jsonify({'result':'SUCCESS'})
+
+# DELETE
+@app.route('/board/delete', methods=["DELETE"])
+def delete_board():
+    # post id로 지워야하는데 어케 받지
+    return jsonify({'result':'SUCCESS'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=3000, debug=True)

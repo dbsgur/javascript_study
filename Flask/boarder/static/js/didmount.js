@@ -5,9 +5,21 @@ let loginForm = document.querySelector("#loginform");
 
 function status() {
   // jwt 토큰 만료했는지 확인하고
-  let userState = sessionStorage.getItem("userId");
+  let userState = "";
+  $.ajax({
+    type: "GET",
+    url: "/protected",
+    async: false,
+    data: {},
+    success: function (response) {
+      // response
+      // console.log(response);
+      userState = response.logged_in_as;
+    },
+  });
+  // let userState = sessionStorage.getItem("userId");
   console.log(userState);
-  if (userState === null) {
+  if (userState === "") {
     // 로그인 화면 + 회원가입
     logoutBtn.classList.add("hidden");
     loginBtn.classList.remove("hidden");
