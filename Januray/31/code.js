@@ -88,3 +88,109 @@ promiseAjax('https://jsonplaceholder.typicode.com/todos/1')
 
 //
 
+// 이터레이션 프로토콜을 구현하여 무한 이터러블을 생성하는 함수
+const createInfinityByIteration = function () {
+  let i = 0; // 자유 변수
+  return {
+    [Symbol.iterator]() { return this; },
+    next() {
+      return { value: ++i };
+    }
+  };
+};
+
+for (const n of createInfinityByIteration()) {
+  if (n > 5) break;
+  console.log(n); // 1 2 3 4 5
+}
+
+// 무한 이터러블을 생성하는 제너레이터 함수
+function* createInfinityByGenerator() {
+  let i = 0;
+  while (true) { yield ++i; }
+}
+
+for (const n of createInfinityByGenerator()) {
+  if (n > 5) break;
+  console.log(n); // 1 2 3 4 5
+}
+
+//
+
+function* counter() {
+  console.log('첫번째 호출');
+  yield 1;                  // 첫번째 호출 시에 이 지점까지 실행된다.
+  console.log('두번째 호출');
+  yield 2;                  // 두번째 호출 시에 이 지점까지 실행된다.
+  console.log('세번째 호출');  // 세번째 호출 시에 이 지점까지 실행된다.
+}
+
+const generatorObj = counter();
+
+console.log(generatorObj.next()); // 첫번째 호출 {value: 1, done: false}
+console.log(generatorObj.next()); // 두번째 호출 {value: 2, done: false}
+console.log(generatorObj.next()); // 세번째 호출 {value: undefined, done: true}
+
+//
+
+
+// 제너레이터 함수 정의
+function* counter() {
+  for (const v of [1, 2, 3]) yield v;
+  // => yield* [1, 2, 3];
+}
+
+// 제너레이터 함수를 호출하면 제너레이터를 반환한다.
+let generatorObj = counter();
+
+// 제너레이터는 이터러블이다.
+console.log(Symbol.iterator in generatorObj); // true
+
+for (const i of generatorObj) {
+  console.log(i); // 1 2 3
+}
+
+generatorObj = counter();
+
+// 제너레이터는 이터레이터이다.
+console.log('next' in generatorObj); // true
+
+console.log(generatorObj.next()); // {value: 1, done: false}
+console.log(generatorObj.next()); // {value: 2, done: false}
+console.log(generatorObj.next()); // {value: 3, done: false}
+console.log(generatorObj.next()); // {value: undefined, done: true}
+
+//
+
+// 제너레이터 함수 선언문
+function* genDecFunc() {
+  yield 1;
+}
+
+let generatorObj = genDecFunc();
+
+// 제너레이터 함수 표현식
+const genExpFunc = function* () {
+  yield 1;
+};
+
+generatorObj = genExpFunc();
+
+// 제너레이터 메소드
+const obj = {
+  * generatorObjMethod() {
+    yield 1;
+  }
+};
+
+generatorObj = obj.generatorObjMethod();
+
+// 제너레이터 클래스 메소드
+class MyClass {
+  * generatorClsMethod() {
+    yield 1;
+  }
+}
+
+const myClass = new MyClass();
+generatorObj = myClass.generatorClsMethod();

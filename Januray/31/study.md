@@ -356,3 +356,185 @@ Promise 객체를 반환한 비동기 함수는 프로미스 후속 처리 메�
 </body>
 </html>
 ```
+
+### 제너레이터(Generator)란 ?
+
+ES6에서 도입된 제너레이터 함수는 이터러블을 생성하는 함수다.
+
+제너레이터 함수를 사용하면 간편하게 이터러블을 구현할 수 있다.
+
+또한, 제너레이터 함수는 비동기 처리에 유용하게 사용된다.
+
+이터러블이란 ? 이터러블 프로토콜을 준수한 객체를 이터러블이라한다.
+Symbol.iterator 메소드를 구현하거나 프로토타입 체인에 의해 상속한 객체를 말한다.
+
+```
+// 이터레이션 프로토콜을 구현하여 무한 이터러블을 생성하는 함수
+const createInfinityByIteration = function () {
+  let i = 0; // 자유 변수
+  return {
+    [Symbol.iterator]() { return this; },
+    next() {
+      return { value: ++i };
+    }
+  };
+};
+
+for (const n of createInfinityByIteration()) {
+  if (n > 5) break;
+  console.log(n); // 1 2 3 4 5
+}
+
+// 무한 이터러블을 생성하는 제너레이터 함수
+function* createInfinityByGenerator() {
+  let i = 0;
+  while (true) { yield ++i; }
+}
+
+for (const n of createInfinityByGenerator()) {
+  if (n > 5) break;
+  console.log(n); // 1 2 3 4 5
+}
+```
+
+제너레이터 함수는 일반 함수와는 다른 독특한 동작을 한다.
+**제너레이터 함수는 일반 함수와 같이 함수의 코드블록을 한번에 실행하지 않고**
+**함수 코드 블록의 실행을 일시 중지했다가 필요한 시점에 재시작할 수 있는 특수한 함수다.**
+
+```
+function* counter() {
+  console.log('첫번째 호출');
+  yield 1;                  // 첫번째 호출 시에 이 지점까지 실행된다.
+  console.log('두번째 호출');
+  yield 2;                  // 두번째 호출 시에 이 지점까지 실행된다.
+  console.log('세번째 호출');  // 세번째 호출 시에 이 지점까지 실행된다.
+}
+
+const generatorObj = counter();
+
+console.log(generatorObj.next()); // 첫번째 호출 {value: 1, done: false}
+console.log(generatorObj.next()); // 두번째 호출 {value: 2, done: false}
+console.log(generatorObj.next()); // 세번째 호출 {value: undefined, done: true}
+```
+
+일반 함수를 호출하면 return 문으로 반환값을 리턴하지만 제너레이터 함수를 호출하면 제너레이터를 반환한다.
+**이 제너레이터는 이터러블이면서 동시에 이터레이터인 객체이다.**
+
+즉, 제너레이터 함수가 생성한 제너레이터는 Symbol.iterator 메소드를 소유한 이터러블이다. 그리고 제너레이터는 next 메소드를 소유하면 next 메소드를 호출하면 value, done 프로퍼티를 갖는 이터레이터 리절트 객체를 반환하는 이터레이터이다.
+
+```
+// 제너레이터 함수 정의
+function* counter() {
+  for (const v of [1, 2, 3]) yield v;
+  // => yield* [1, 2, 3];
+}
+
+// 제너레이터 함수를 호출하면 제너레이터를 반환한다.
+let generatorObj = counter();
+
+// 제너레이터는 이터러블이다.
+console.log(Symbol.iterator in generatorObj); // true
+
+for (const i of generatorObj) {
+  console.log(i); // 1 2 3
+}
+
+generatorObj = counter();
+
+// 제너레이터는 이터레이터이다.
+console.log('next' in generatorObj); // true
+
+console.log(generatorObj.next()); // {value: 1, done: false}
+console.log(generatorObj.next()); // {value: 2, done: false}
+console.log(generatorObj.next()); // {value: 3, done: false}
+console.log(generatorObj.next()); // {value: undefined, done: true}
+```
+
+### 제너레이터 함수의 정의
+
+제너레이터 함수는 function\* 키워드로 선언한다. 그리고 하나 이상의 yield 문을 포함한다.
+
+```
+// 제너레이터 함수 선언문
+function* genDecFunc() {
+  yield 1;
+}
+
+let generatorObj = genDecFunc();
+
+// 제너레이터 함수 표현식
+const genExpFunc = function* () {
+  yield 1;
+};
+
+generatorObj = genExpFunc();
+
+// 제너레이터 메소드
+const obj = {
+  * generatorObjMethod() {
+    yield 1;
+  }
+};
+
+generatorObj = obj.generatorObjMethod();
+
+// 제너레이터 클래스 메소드
+class MyClass {
+  * generatorClsMethod() {
+    yield 1;
+  }
+}
+
+const myClass = new MyClass();
+generatorObj = myClass.generatorClsMethod();
+```
+
+### 제너레이터 함수의 호출과 제너레이터 객체
+
+제너레이터 함수를 호출하면 제너레이터 함수의 코드 블록이 실행되는 것이 아니라,
+제너레이터 객체를 반환한다.
+
+제너레이터 객체는 이터러블이면서 동시에 이터레이터다.
+
+따라서, next 메소드를 호출하기 위해 Symbol.iterator 메소드로 이터레이터를 별도 생성할 필요가 없다.
+
+```
+// 제너레이터 함수 정의
+function* counter() {
+  console.log('Point 1');
+  yield 1;                // 첫번째 next 메소드 호출 시 여기까지 실행된다.
+  console.log('Point 2');
+  yield 2;                // 두번째 next 메소드 호출 시 여기까지 실행된다.
+  console.log('Point 3');
+  yield 3;                // 세번째 next 메소드 호출 시 여기까지 실행된다.
+  console.log('Point 4'); // 네번째 next 메소드 호출 시 여기까지 실행된다.
+}
+
+// 제너레이터 함수를 호출하면 제너레이터 객체를 반환한다.
+// 제너레이터 객체는 이터러블이며 동시에 이터레이터이다.
+// 따라서 Symbol.iterator 메소드로 이터레이터를 별도 생성할 필요가 없다
+const generatorObj = counter();
+
+// 첫번째 next 메소드 호출: 첫번째 yield 문까지 실행되고 일시 중단된다.
+console.log(generatorObj.next());
+// Point 1
+// {value: 1, done: false}
+
+// 두번째 next 메소드 호출: 두번째 yield 문까지 실행되고 일시 중단된다.
+console.log(generatorObj.next());
+// Point 2
+// {value: 2, done: false}
+
+// 세번째 next 메소드 호출: 세번째 yield 문까지 실행되고 일시 중단된다.
+console.log(generatorObj.next());
+// Point 3
+// {value: 3, done: false}
+
+// 네번째 next 메소드 호출: 제너레이터 함수 내의 모든 yield 문이 실행되면 done 프로퍼티 값은 true가 된다.
+console.log(generatorObj.next());
+// Point 4
+// {value: undefined, done: true}
+```
+
+제너레이터 함수가 생성한 제너레이터 객체의 next 메소드를 호출하면 처음 만나는 yield 문까지 실행되고 일시 중단(suspend)된다.
+또 다시, next 메소드를 호출하면 중단된 위치에서 다시 실행(resume)이 시작하여 다음 만나는 yield 문까지 실행되고 또 다시 실행된다.
