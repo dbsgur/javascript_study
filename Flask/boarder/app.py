@@ -162,12 +162,12 @@ def create_board():
     user_id = request.form['user_id']
     post_title = request.form['post_title']
     post_content = request.form['post_content']
-    # post_date = new Date
+    post_date = request.form['post_date']
     # 처리 백? 프론트?
     post_likes = request.form['post_likes']
     # 저장
-    db.board.insert_one({'user_id': user_id, 'post_title': post_title, 'post_content':post_content, 'post_likes':post_likes})
-    return jsonify({'result':'SUCCESS'})
+    db.board.insert_one({'user_id': user_id, 'post_title': post_title, 'post_content':post_content, 'post_likes':post_likes, 'post_date' : post_date})
+    return jsonify({'result':'SUCCESS', 'message': 'CREATE SUCCESS'})
 
 # READ
 @app.route('/board/read', methods=["GET"])

@@ -2,6 +2,27 @@ const boardForm = document.querySelector("#board_form_submit");
 const postTitle = document.querySelector("#post_title");
 const postContent = document.querySelector("#post_content");
 
+const readPost = function () {
+  $.ajax({
+    type: "GET",
+    url: "board/read",
+    data: {},
+    success: function (response) {
+      console.log(response.posts);
+      for (let i = 0; i < response.posts.length; i++) {
+        let tempHtml = `<tr>
+        <td>${i + 1}</td>
+        <td>${response.posts[i]["post_title"]}</td>
+        <td>${response.posts[i]["post_date"]}</td>
+        <td>${response.posts[i]["user_id"]}</td>
+        </tr>
+      `;
+        $("#table-box").append(tempHtml);
+      }
+    },
+  });
+};
+
 function submitPost(e) {
   e.preventDefault();
   let user_id = "";
@@ -48,5 +69,6 @@ function submitPost(e) {
 
 boardForm.addEventListener("click", submitPost);
 
+readPost();
 // console.log(new Date());
 // console.log(new Date().toISOString().split("T")[0]);
