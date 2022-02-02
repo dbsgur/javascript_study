@@ -1028,3 +1028,134 @@ function solution(s) {
 
   return Number(answer);
 }
+
+//
+
+// 신규 아이디 추천
+function solution(new_id) {
+  let answer = new_id.toLowerCase();
+  answer = answer.replace(/[^\w-_.]/g,'')
+  .replace(/\.+/g,'.')
+  .replace(/^\.|\.$/g,'')
+  if(answer.length === 0) {answer = "a"}
+  if(answer.length >15) {answer = answer.slice(0,15)}
+  answer = answer.replace(/\.$/g, '')
+  if(answer.length ===1) {answer= answer.repeat(3)}
+  if(answer.length ===2) {answer= answer+answer[1]}
+  return answer;
+}
+
+const solution = (new_id) => {
+  const id = new_id
+      .toLowerCase()
+      .replace(/[^\w\d-_.]/g, '')
+      .replace(/\.{2,}/g, '.')
+      .replace(/^\.|\.$/g, '')
+      .padEnd(1, 'a')
+      .slice(0, 15)
+      .replace(/^\.|\.$/g, '')        
+  return id.padEnd(3, id[id.length-1])
+}
+
+//
+
+// 로또의 최고 순위와 최저 순위
+
+function solution(lottos, win_nums) {
+  let answer = 7;
+  let zero =0;
+  for (let i=0; i<lottos.length; i++){
+      if(lottos[i] === 0){
+          zero++
+      }
+      if(zero===6){
+          return [1,6]
+      }
+  }
+  for (let i=0; i<win_nums.length; i++){
+      if (lottos.find(lotto => lotto === win_nums[i])){
+          answer--;
+      }
+  }
+  if (answer === 7){
+      answer = 6
+  }
+  return [answer-zero, answer];
+}
+
+function solution(lottos, win_nums) {
+  const rank = [6, 6, 5, 4, 3, 2, 1];
+
+  let minCount = lottos.filter(v => win_nums.includes(v)).length;
+  let zeroCount = lottos.filter(v => !v).length;
+
+  const maxCount = minCount + zeroCount;
+
+  return [rank[maxCount], rank[minCount]];
+}
+
+//
+
+function solution(id_list, report, k) {
+  let bads = [];
+  let reports = {};
+  let unique = new Set(report)
+  let uniqueArr = [...unique]
+  for (let i=0; i<id_list.length; i++){
+      reports[id_list[i]] = 0
+  }
+  for (let i=0; i<uniqueArr.length; i++){
+      // [1] 
+      let bad = uniqueArr[i].split(' ')[1]
+      bads.push(bad)
+      reports[bad] += 1
+  }
+  return reports;
+}
+
+//
+
+// 신고 결과 받기
+function solution(id_list, report, k) {
+  const answer = new Array(id_list.length);
+  answer.fill(0) 
+  // report 중복 제거 set+ spread 조합이 가장 빠르다
+  report = [...new Set(report)]
+  const report_list = {} 
+  id_list.map((user)=>{
+      report_list[user] = [] //key로 userid를 value로 빈 배열을 가지는 객체
+  })
+  
+  // 누가 누구한테 신고당했는지
+  report.map((user)=>{
+      const [user_id, report_id] = user.split(' ')
+          report_list[report_id].push(user_id)
+  })
+  
+  for(const key in report_list){
+      // length = 신고당한 횟수
+      if(report_list[key].length >= k){ //이용정지 유저
+          report_list[key].map((user)=>{
+              answer[id_list.indexOf(user)] += 1
+          })
+      }
+  }
+  return answer;
+}
+
+function solution(id_list, report, k) {
+  let reports = [...new Set(report)].map(a=>{return a.split(' ')});
+  let counts = new Map();
+  for (const bad of reports){
+      counts.set(bad[1],counts.get(bad[1])+1||1)
+  }
+  let good = new Map();
+  for(const report of reports){
+      if(counts.get(report[1])>=k){
+          good.set(report[0],good.get(report[0])+1||1)
+      }
+  }
+  let answer = id_list.map(a=>good.get(a)||0)
+  return answer;
+}
+
