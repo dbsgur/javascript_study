@@ -911,48 +911,48 @@ function solution(N, stages) {
   // 같다면 오름차순으로 정렬 -> 이미 오름차순이므로 생략
   return fails.map((x) => x[0]);
 }
-unction solution(N, stages) {
-  const obj = {}
-  for(let i=1; i<=N; i++) {
-      obj[i] = 0;
+function solution(N, stages) {
+  const obj = {};
+  for (let i = 1; i <= N; i++) {
+    obj[i] = 0;
   }
 
   // 스테이지에 머물고있는 인원 파악
   stages.forEach((v) => {
-      if(v !== N+1) {
+    if (v !== N + 1) {
       obj[v] += 1;
-      }
-  })
+    }
+  });
 
   // 계산
   let stay = 0;
   let stayed = stages.length;
   const failPercentageArr = [];
-  for(let key in obj) {
-      stay = obj[key];
-      console.log(stay, '/', stayed);
-      if(stayed == 0 || stay == 0) {
-          failPercentageArr.push({stage: key, fail: 0});            
-      } else {
-          failPercentageArr.push({stage: key, fail: stay/stayed});
-      }
-      stayed = stayed - stay;
+  for (let key in obj) {
+    stay = obj[key];
+    console.log(stay, "/", stayed);
+    if (stayed == 0 || stay == 0) {
+      failPercentageArr.push({ stage: key, fail: 0 });
+    } else {
+      failPercentageArr.push({ stage: key, fail: stay / stayed });
+    }
+    stayed = stayed - stay;
   }
 
   // 정렬
-  failPercentageArr.sort((a,b) => {
-      if (b.fail > a.fail) {
-          return 1;
-      } else if (b.fail < a.fail) {
-          return -1;
-      } else if (b.fail == a.fail) {
-          return a.stage - b.stage
-      }
-  })
+  failPercentageArr.sort((a, b) => {
+    if (b.fail > a.fail) {
+      return 1;
+    } else if (b.fail < a.fail) {
+      return -1;
+    } else if (b.fail == a.fail) {
+      return a.stage - b.stage;
+    }
+  });
 
   return failPercentageArr.map((v) => {
-      return Number(v.stage);
-  })
+    return Number(v.stage);
+  });
 }
 
 //
@@ -960,22 +960,21 @@ unction solution(N, stages) {
 // 크레인 인형뽑기
 function solution(board, moves) {
   var answer = 0;
-  let arr = []
-  for(let i = 0; i < moves.length; i++){
-      for(let j = 0; j < board.length;j++){
-          if(board[j][moves[i]-1] !== 0){
-              arr.push(board[j][moves[i]-1])
-              board[j][moves[i]-1] = 0
-              break;
-          }
+  let arr = [];
+  for (let i = 0; i < moves.length; i++) {
+    for (let j = 0; j < board.length; j++) {
+      if (board[j][moves[i] - 1] !== 0) {
+        arr.push(board[j][moves[i] - 1]);
+        board[j][moves[i] - 1] = 0;
+        break;
       }
-      if (arr.length >=2){
-          if (arr[arr.length-1] === arr[arr.length-2]){
-              answer +=2
-              arr.splice(arr.length-2,2)
-
-          }
-      } 
+    }
+    if (arr.length >= 2) {
+      if (arr[arr.length - 1] === arr[arr.length - 2]) {
+        answer += 2;
+        arr.splice(arr.length - 2, 2);
+      }
+    }
   }
   return answer;
 }
@@ -983,17 +982,16 @@ function solution(board, moves) {
   var answer = 0;
   var arr = new Array();
 
-  for(var m = 0; m<moves.length; m++){
-      for(var i = 0; i<board.length; i++){
-          if(board[i][moves[m]-1]){
-              if(arr[arr.length-1] == board[i][moves[m]-1])
-                  answer+=2, arr.pop();
-              else
-                  arr.push(board[i][moves[m]-1]);
-              board[i][moves[m]-1] = 0;
-              break;
-          }
+  for (var m = 0; m < moves.length; m++) {
+    for (var i = 0; i < board.length; i++) {
+      if (board[i][moves[m] - 1]) {
+        if (arr[arr.length - 1] == board[i][moves[m] - 1])
+          (answer += 2), arr.pop();
+        else arr.push(board[i][moves[m] - 1]);
+        board[i][moves[m] - 1] = 0;
+        break;
       }
+    }
   }
   return answer;
 }
@@ -1003,27 +1001,38 @@ function solution(board, moves) {
 //숫자 문자열과 영단어
 function solution(s) {
   var answer = 0;
-  s=s.replace(/zero/gi,0)
-  s=s.replace(/one/g,1)
-  s=s.replace(/two/g, 2)
-  s=s.replace(/three/g,3)
-  s=s.replace(/four/g,4)
-  s=s.replace(/five/g,5)
-  s=s.replace(/six/g,6)
-  s=s.replace(/seven/g,7)
-  s=s.replace(/eight/g,8)
-  s=s.replace(/nine/g,9)
-  
+  s = s.replace(/zero/gi, 0);
+  s = s.replace(/one/g, 1);
+  s = s.replace(/two/g, 2);
+  s = s.replace(/three/g, 3);
+  s = s.replace(/four/g, 4);
+  s = s.replace(/five/g, 5);
+  s = s.replace(/six/g, 6);
+  s = s.replace(/seven/g, 7);
+  s = s.replace(/eight/g, 8);
+  s = s.replace(/nine/g, 9);
+
   return +s;
 }
 
 function solution(s) {
-  let numbers = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+  let numbers = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+  ];
   var answer = s;
 
-  for(let i=0; i< numbers.length; i++) {
-      let arr = answer.split(numbers[i]);
-      answer = arr.join(i);
+  for (let i = 0; i < numbers.length; i++) {
+    let arr = answer.split(numbers[i]);
+    answer = arr.join(i);
   }
 
   return Number(answer);
@@ -1034,28 +1043,37 @@ function solution(s) {
 // 신규 아이디 추천
 function solution(new_id) {
   let answer = new_id.toLowerCase();
-  answer = answer.replace(/[^\w-_.]/g,'')
-  .replace(/\.+/g,'.')
-  .replace(/^\.|\.$/g,'')
-  if(answer.length === 0) {answer = "a"}
-  if(answer.length >15) {answer = answer.slice(0,15)}
-  answer = answer.replace(/\.$/g, '')
-  if(answer.length ===1) {answer= answer.repeat(3)}
-  if(answer.length ===2) {answer= answer+answer[1]}
+  answer = answer
+    .replace(/[^\w-_.]/g, "")
+    .replace(/\.+/g, ".")
+    .replace(/^\.|\.$/g, "");
+  if (answer.length === 0) {
+    answer = "a";
+  }
+  if (answer.length > 15) {
+    answer = answer.slice(0, 15);
+  }
+  answer = answer.replace(/\.$/g, "");
+  if (answer.length === 1) {
+    answer = answer.repeat(3);
+  }
+  if (answer.length === 2) {
+    answer = answer + answer[1];
+  }
   return answer;
 }
 
 const solution = (new_id) => {
   const id = new_id
-      .toLowerCase()
-      .replace(/[^\w\d-_.]/g, '')
-      .replace(/\.{2,}/g, '.')
-      .replace(/^\.|\.$/g, '')
-      .padEnd(1, 'a')
-      .slice(0, 15)
-      .replace(/^\.|\.$/g, '')        
-  return id.padEnd(3, id[id.length-1])
-}
+    .toLowerCase()
+    .replace(/[^\w\d-_.]/g, "")
+    .replace(/\.{2,}/g, ".")
+    .replace(/^\.|\.$/g, "")
+    .padEnd(1, "a")
+    .slice(0, 15)
+    .replace(/^\.|\.$/g, "");
+  return id.padEnd(3, id[id.length - 1]);
+};
 
 //
 
@@ -1063,31 +1081,31 @@ const solution = (new_id) => {
 
 function solution(lottos, win_nums) {
   let answer = 7;
-  let zero =0;
-  for (let i=0; i<lottos.length; i++){
-      if(lottos[i] === 0){
-          zero++
-      }
-      if(zero===6){
-          return [1,6]
-      }
+  let zero = 0;
+  for (let i = 0; i < lottos.length; i++) {
+    if (lottos[i] === 0) {
+      zero++;
+    }
+    if (zero === 6) {
+      return [1, 6];
+    }
   }
-  for (let i=0; i<win_nums.length; i++){
-      if (lottos.find(lotto => lotto === win_nums[i])){
-          answer--;
-      }
+  for (let i = 0; i < win_nums.length; i++) {
+    if (lottos.find((lotto) => lotto === win_nums[i])) {
+      answer--;
+    }
   }
-  if (answer === 7){
-      answer = 6
+  if (answer === 7) {
+    answer = 6;
   }
-  return [answer-zero, answer];
+  return [answer - zero, answer];
 }
 
 function solution(lottos, win_nums) {
   const rank = [6, 6, 5, 4, 3, 2, 1];
 
-  let minCount = lottos.filter(v => win_nums.includes(v)).length;
-  let zeroCount = lottos.filter(v => !v).length;
+  let minCount = lottos.filter((v) => win_nums.includes(v)).length;
+  let zeroCount = lottos.filter((v) => !v).length;
 
   const maxCount = minCount + zeroCount;
 
@@ -1099,16 +1117,16 @@ function solution(lottos, win_nums) {
 function solution(id_list, report, k) {
   let bads = [];
   let reports = {};
-  let unique = new Set(report)
-  let uniqueArr = [...unique]
-  for (let i=0; i<id_list.length; i++){
-      reports[id_list[i]] = 0
+  let unique = new Set(report);
+  let uniqueArr = [...unique];
+  for (let i = 0; i < id_list.length; i++) {
+    reports[id_list[i]] = 0;
   }
-  for (let i=0; i<uniqueArr.length; i++){
-      // [1] 
-      let bad = uniqueArr[i].split(' ')[1]
-      bads.push(bad)
-      reports[bad] += 1
+  for (let i = 0; i < uniqueArr.length; i++) {
+    // [1]
+    let bad = uniqueArr[i].split(" ")[1];
+    bads.push(bad);
+    reports[bad] += 1;
   }
   return reports;
 }
@@ -1118,44 +1136,46 @@ function solution(id_list, report, k) {
 // 신고 결과 받기
 function solution(id_list, report, k) {
   const answer = new Array(id_list.length);
-  answer.fill(0) 
+  answer.fill(0);
   // report 중복 제거 set+ spread 조합이 가장 빠르다
-  report = [...new Set(report)]
-  const report_list = {} 
-  id_list.map((user)=>{
-      report_list[user] = [] //key로 userid를 value로 빈 배열을 가지는 객체
-  })
-  
+  report = [...new Set(report)];
+  const report_list = {};
+  id_list.map((user) => {
+    report_list[user] = []; //key로 userid를 value로 빈 배열을 가지는 객체
+  });
+
   // 누가 누구한테 신고당했는지
-  report.map((user)=>{
-      const [user_id, report_id] = user.split(' ')
-          report_list[report_id].push(user_id)
-  })
-  
-  for(const key in report_list){
-      // length = 신고당한 횟수
-      if(report_list[key].length >= k){ //이용정지 유저
-          report_list[key].map((user)=>{
-              answer[id_list.indexOf(user)] += 1
-          })
-      }
+  report.map((user) => {
+    const [user_id, report_id] = user.split(" ");
+    report_list[report_id].push(user_id);
+  });
+
+  for (const key in report_list) {
+    // length = 신고당한 횟수
+    if (report_list[key].length >= k) {
+      //이용정지 유저
+      report_list[key].map((user) => {
+        answer[id_list.indexOf(user)] += 1;
+      });
+    }
   }
   return answer;
 }
 
 function solution(id_list, report, k) {
-  let reports = [...new Set(report)].map(a=>{return a.split(' ')});
+  let reports = [...new Set(report)].map((a) => {
+    return a.split(" ");
+  });
   let counts = new Map();
-  for (const bad of reports){
-      counts.set(bad[1],counts.get(bad[1])+1||1)
+  for (const bad of reports) {
+    counts.set(bad[1], counts.get(bad[1]) + 1 || 1);
   }
   let good = new Map();
-  for(const report of reports){
-      if(counts.get(report[1])>=k){
-          good.set(report[0],good.get(report[0])+1||1)
-      }
+  for (const report of reports) {
+    if (counts.get(report[1]) >= k) {
+      good.set(report[0], good.get(report[0]) + 1 || 1);
+    }
   }
-  let answer = id_list.map(a=>good.get(a)||0)
+  let answer = id_list.map((a) => good.get(a) || 0);
   return answer;
 }
-

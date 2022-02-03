@@ -1,20 +1,22 @@
 const boardForm = document.querySelector("#board_form_submit");
 const postTitle = document.querySelector("#post_title");
 const postContent = document.querySelector("#post_content");
+const $detail = document.querySelector("#detail");
 
 const readPost = function () {
   $.ajax({
     type: "GET",
-    url: "board/read",
+    url: "/board/read",
     data: {},
     success: function (response) {
       console.log(response.posts);
       for (let i = 0; i < response.posts.length; i++) {
-        let tempHtml = `<tr>
+        let tempHtml = `<tr id="${i}">
         <td>${i + 1}</td>
         <td>${response.posts[i]["post_title"]}</td>
         <td>${response.posts[i]["post_date"]}</td>
         <td>${response.posts[i]["user_id"]}</td>
+        <td><button>보기</button></td>
         </tr>
       `;
         $("#table-box").append(tempHtml);
@@ -22,6 +24,22 @@ const readPost = function () {
     },
   });
 };
+
+const detailPost = function () {
+  console.log("eee");
+  $.ajax({
+    type: "GET",
+    url: "/board/read/<61f8dcb7a7a760d114beb372>",
+    data: {},
+    success: function (response) {
+      console.log(response);
+    },
+  });
+};
+
+$detail.onclick = detailPost;
+
+const deletePost = function () {};
 
 function submitPost(e) {
   e.preventDefault();

@@ -25,6 +25,7 @@ function status() {
     loginBtn.classList.remove("hidden");
   } else {
     // 로그 아웃
+    $("#hello-form").append(`HELLO  ${userState}`);
     logoutBtn.classList.remove("hidden");
     loginBtn.classList.add("hidden");
   }

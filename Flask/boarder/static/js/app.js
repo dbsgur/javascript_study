@@ -46,6 +46,7 @@ function onClickLogIn(e) {
         // console.log("user_id : ", user_id);
         alert(response["message"]);
         window.location.reload();
+        // window.location.href = `/${user_id}`;
       } else {
         // 401 에러일때 예외처리
         // alert("WRONG ID");

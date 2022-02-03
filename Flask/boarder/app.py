@@ -13,6 +13,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended import set_access_cookies
+from flask_jwt_extended import set_refresh_cookies
 from flask_jwt_extended import unset_jwt_cookies
 from flask_jwt_extended import create_refresh_token
 # from flask_jwt_extended import jwt_refresh_token_required
@@ -22,12 +23,12 @@ app = Flask(__name__)
 
 # If true this will only allow the cookies that contain your JWTs to be sent
 # over https. In production, this should always be set to True
-app.config["JWT_COOKIE_SECURE"] = False
+app.config["JWT_COOKIE_SECURE"] = False # https를 통해서만 cookie가 갈 수 있는지 (production 에선 True)
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_SECRET_KEY"] = "hyuk-is-coding..."
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 # app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=1)
-# app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=7)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=7)
 
 bcrypt = Bcrypt(app)
 # client = MongoClient('mongodb://test:test@localhost',27017)
@@ -66,6 +67,7 @@ def home():
 @jwt_required()
 def board():
     # current_user = get_jwt_identity()
+    # return render_template('news.html'), 200
     return render_template('board.html'), 200
 
 @app.route('/news')
@@ -74,6 +76,10 @@ def news():
     # current_user = get_jwt_identity()
     return render_template('news.html'), 200
 
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', name=name)
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
@@ -92,8 +98,6 @@ def protected():
 #      USER         #
 #####################
 # sing up
-
-
 @app.route('/user/signup', methods=['POST'])
 def signup():
     # id, password 받아오고 저장
@@ -125,10 +129,11 @@ def login():
     check_pwd = db.user.find_one({"user_id":user_id})
     if check_password_hash(check_pwd.get('user_pwd'), user_pwd):
         response = jsonify({'result': 'SUCCESS', 'message': 'LOGIN SUCCESS'})
-        access_token = create_access_token(identity=user_id)
-        # refresh_token = create_refresh_token(identity=user_id)
+        access_token = create_access_token(identity=user_id, expires_delta = False)
+        refresh_token = create_refresh_token(identity=user_id)
         # session['logged_in'] = True
         set_access_cookies(response, access_token)
+        set_refresh_cookies(response, refresh_token)
         return response
     else :
         return jsonify({'result': 'FAIL', 'message': 'WRONG PWD'})#, 401
@@ -172,8 +177,28 @@ def create_board():
 # READ
 @app.route('/board/read', methods=["GET"])
 def read_board():
-    posts = list(db.board.find({},{'_id':False}))
+    # posts = list(db.board.find({}))
+    posts = list(db.board.find({},{'_id':False}).sort('post_date', -1))
+    # posts =list(db.board.find({}))
+    print(posts)
+    # return posts[0]
     return jsonify({'result':'SUCCESS', 'posts':posts})
+
+# DETAIL
+# @app.route('/board/read/<post_id>')
+# def read_detail_board(post_id=None):
+#     # posts = db.board.find_one({'_id':post_id})
+#     # for post in posts :
+#     #     print('post :', post)
+#     # print('posts :',posts)
+#     return render_template('hello.html', post_id = post_id)
+@app.route('/board/read/<post_id>', methods=['GET'])
+def read_articles(post_id):
+    post = db.board.find_one({'_id' : post_id})
+    print(post)
+    return render_template('hello.html', post = post)
+
+
 
 # UPDATE
 @app.route('/board/update', methods=["PATCH"])
