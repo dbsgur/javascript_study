@@ -1,14 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <title>BOARD</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dokdo&display=swap" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <script>
+    let objectId = '{{post['_id']}}';
+    console.log(objectId);
+  </script>
 </head>
 
 <body>
-  HELLO {{post}}
+  <!-- <h1>
+    HELLO {{post}}
+  </h1> -->
+
+  <h1>{{post['_id']}}</h1>
+  <h1>dddd</h1>
+  <div
+    style="display: flex; flex-direction: column; align-items: center; justify-content: center; width:50%; height: 50vh;">
+    <h1 style="font-size: xx-large; font-weight: 900;">글 제목 : {{post['post_title']}}</h1>
+    <h1 style="font-size:x-large;">작성자 : {{post['user_id']}}
+      작성 시간 : {{post['post_date']}}</h1>
+    <section style="border:2px solid red; width: 90%; height: 45%;"><br /> {{post['post_content']}}</section>
+    <section>
+      <!-- LIKE -->
+      <button style="border-radius: 15px; color : royalblue; background-color: rosybrown; padding :10px;">좋아요
+        {{post['post_likes']}}</button>
+      <!-- UPDATE -->
+      <button style="border-radius: 15px; color : royalblue; background-color: rosybrown; padding :10px;">수정
+      </button>
+      <!-- 삭제 -->
+      <button style="border-radius: 15px; color : royalblue; background-color: rosybrown; padding :10px;">삭제
+      </button>
+    </section>
+  </div>
+
   <!-- <script>console.log()</script> -->
 </body>
 

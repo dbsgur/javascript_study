@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
@@ -27,8 +28,8 @@ app.config["JWT_COOKIE_SECURE"] = False # https를 통해서만 cookie가 갈 �
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_SECRET_KEY"] = "hyuk-is-coding..."
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-# app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=1)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=7)
+# app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=1)
 
 bcrypt = Bcrypt(app)
 # client = MongoClient('mongodb://test:test@localhost',27017)
@@ -94,6 +95,14 @@ def protected():
     # 찾을 수 있을 것이다. 그 사용자 이름. 즉, 식별자 identity를 반환하는 함수다.
     return jsonify(logged_in_as=current_user), 200
 
+# @app.route("/optionally_protected", methods=["GET"])
+# @jwt_required(optional=True)
+# def optionally_protected():
+#     current_identity = get_jwt_identity()
+#     if current_identity:
+#         return jsonify(logged_in_as=current_identity)
+#     else:
+#         return jsonify(logged_in_as="anonymous user")
 #####################
 #      USER         #
 #####################
@@ -178,11 +187,17 @@ def create_board():
 @app.route('/board/read', methods=["GET"])
 def read_board():
     # posts = list(db.board.find({}))
-    posts = list(db.board.find({},{'_id':False}).sort('post_date', -1))
-    # posts =list(db.board.find({}))
-    print(posts)
+    # posts = list(db.board.find({},{'_id':False}).sort('post_date', -1))
+    posts = list(db.board.find())
+    # print(posts)
+    board_list = []
+    for post in posts :
+        post['_id'] = str(post['_id'])
+        board_list.append(post)
+    # print('object_id :', board_list)
     # return posts[0]
-    return jsonify({'result':'SUCCESS', 'posts':posts})
+    # return render_template('hello.html', 'posts':posts)
+    return jsonify({'result':'SUCCESS', 'posts':board_list})
 
 # DETAIL
 # @app.route('/board/read/<post_id>')
@@ -194,8 +209,9 @@ def read_board():
 #     return render_template('hello.html', post_id = post_id)
 @app.route('/board/read/<post_id>', methods=['GET'])
 def read_articles(post_id):
-    post = db.board.find_one({'_id' : post_id})
-    print(post)
+    post = db.board.find_one({'_id' : ObjectId(post_id)})
+    # print(post_id)
+    # return jsonify({'post':post})
     return render_template('hello.html', post = post)
 
 

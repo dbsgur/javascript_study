@@ -3,38 +3,47 @@ const postTitle = document.querySelector("#post_title");
 const postContent = document.querySelector("#post_content");
 const $detail = document.querySelector("#detail");
 
-const readPost = function () {
+function readPost() {
   $.ajax({
     type: "GET",
     url: "/board/read",
+    // async: false,
     data: {},
     success: function (response) {
-      console.log(response.posts);
       for (let i = 0; i < response.posts.length; i++) {
-        let tempHtml = `<tr id="${i}">
+        console.log(response);
+        let tempHtml = `<tr id="${response.posts[i]["_id"]}">
         <td>${i + 1}</td>
         <td>${response.posts[i]["post_title"]}</td>
         <td>${response.posts[i]["post_date"]}</td>
         <td>${response.posts[i]["user_id"]}</td>
-        <td><button>보기</button></td>
+        <td><button onclick="detailPost('${
+          response.posts[i]["_id"]
+        }')">보기</button></td>
         </tr>
       `;
         $("#table-box").append(tempHtml);
       }
     },
   });
+}
+
+const testBtn = function () {
+  console.log("!!!!");
 };
 
-const detailPost = function () {
-  console.log("eee");
-  $.ajax({
-    type: "GET",
-    url: "/board/read/<61f8dcb7a7a760d114beb372>",
-    data: {},
-    success: function (response) {
-      console.log(response);
-    },
-  });
+const detailPost = function (objectId) {
+  console.log(objectId);
+  location.href = `/board/read/${objectId}`;
+  // $.ajax({
+  //   type: "GET",
+  //   url: `/board/read/${objectId}`,
+  //   data: {},
+  //   success: function (response) {
+  //     console.log(response);
+  //     location.href = "/hello";
+  //   },
+  // });
 };
 
 $detail.onclick = detailPost;
@@ -42,7 +51,7 @@ $detail.onclick = detailPost;
 const deletePost = function () {};
 
 function submitPost(e) {
-  e.preventDefault();
+  // e.preventDefault();
   let user_id = "";
   $.ajax({
     type: "GET",
@@ -83,6 +92,7 @@ function submitPost(e) {
       }
     },
   });
+  window.location.reload();
 }
 
 boardForm.addEventListener("click", submitPost);
