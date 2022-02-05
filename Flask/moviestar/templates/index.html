@@ -123,7 +123,7 @@
       // 1. 서버에 1) POST 방식으로, 2) /api/delete 라는 url에, 3) name_give라는 이름으로 name을 전달합니다.
       // 참고) POST 방식이므로 data: {'name_give': name} 과 같은 양식이 되어야합니다!
       $.ajax({
-        type: 'POST',
+        type: 'DELETE',
         url: '/api/delete',
         data: { 'name_give': name },
         success: function (response) {
@@ -136,6 +136,11 @@
         }
       });
     }
+    // JQUERY ONCLICK
+    $('btn_alert').on('click', function () {
+      alert('test');
+      return
+    })
 
   </script>
 </head>

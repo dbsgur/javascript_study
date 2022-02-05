@@ -49,7 +49,7 @@ def like_star():
     return jsonify({'result': 'success'})
 
 
-@app.route('/api/delete', methods=['POST'])
+@app.route('/api/delete', methods=['DELETE'])
 def delete_star():
     # 1. 클라이언트가 전달한 name_give를 name_receive 변수에 넣습니다.
     name_receive = request.form['name_give']
