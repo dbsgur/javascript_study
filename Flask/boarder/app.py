@@ -173,6 +173,7 @@ def read_news():
 @app.route('/board/create', methods=["POST"])
 def create_board():
     # 정보 가져오기 > id, title, content, date, like가 있어야하는뎅? schema 피료없나염
+    print(request.form)
     user_id = request.form['user_id']
     post_title = request.form['post_title']
     post_content = request.form['post_content']

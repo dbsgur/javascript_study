@@ -3,6 +3,10 @@ const postTitle = document.querySelector("#post_title");
 const postContent = document.querySelector("#post_content");
 const $detail = document.querySelector("#detail");
 
+$(document).ready(function () {
+  readPost();
+});
+
 function readPost() {
   $.ajax({
     type: "GET",
@@ -11,7 +15,7 @@ function readPost() {
     data: {},
     success: function (response) {
       for (let i = 0; i < response.posts.length; i++) {
-        console.log(response);
+        // console.log(response);
         let tempHtml = `<tr id="${response.posts[i]["_id"]}">
         <td>${i + 1}</td>
         <td>${response.posts[i]["post_title"]}</td>
@@ -46,12 +50,14 @@ const detailPost = function (objectId) {
   // });
 };
 
-$detail.onclick = detailPost;
+// $detail.onclick = detailPost;
+$detail.on("click", detailPost);
 
 const deletePost = function () {};
 
 function submitPost(e) {
-  // e.preventDefault();
+  e.preventDefault();
+  alert("!!!");
   let user_id = "";
   $.ajax({
     type: "GET",
@@ -68,6 +74,8 @@ function submitPost(e) {
   // let user_id = sessionStorage.getItem("userId");
   let post_title = postTitle.value;
   let post_content = postContent.value;
+  console.log(post_title);
+  console.log(post_content);
   let post_date = new Date().toISOString().split("T")[0];
   let post_likes = 0;
   $.ajax({
@@ -84,7 +92,7 @@ function submitPost(e) {
     success: function (response) {
       if (response["result"] === "SUCCESS") {
         alert(response["message"]);
-        // window.location.reload();
+        window.location.reload();
       } else {
         // 401 에러일때 예외처리
         // alert("WRONG ID");
@@ -92,11 +100,17 @@ function submitPost(e) {
       }
     },
   });
-  window.location.reload();
+  // window.location.reload();
 }
 
-boardForm.addEventListener("click", submitPost);
+function alertBtn() {
+  alert("!@#!@");
+}
 
-readPost();
+boardForm.addEventListener("click", submitPost(event));
+
+// boardForm.addEventListener("click", alertBtn);
+
+// readPost();
 // console.log(new Date());
 // console.log(new Date().toISOString().split("T")[0]);

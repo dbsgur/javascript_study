@@ -42,3 +42,20 @@ body {
   margin-left: 15px;
   margin-right: 15px;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  justify-content: space-evenly;
+}
+
+.input {
+  color: black;
+  border-radius: 15px;
+}
+
+.create-btn {
+  color: black;
+  border-radius: 15px;
+}
