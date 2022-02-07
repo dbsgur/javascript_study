@@ -32,10 +32,6 @@ function readPost() {
   });
 }
 
-const testBtn = function () {
-  console.log("!!!!");
-};
-
 const detailPost = function (objectId) {
   console.log(objectId);
   location.href = `/board/read/${objectId}`;
@@ -51,11 +47,14 @@ const detailPost = function (objectId) {
 };
 
 // $detail.onclick = detailPost;
-$detail.on("click", detailPost);
+// $detail.on("click", detailPost);
 
 const deletePost = function () {};
 
+console.log("???");
+
 function submitPost(e) {
+  console.log("submitPost");
   e.preventDefault();
   alert("!!!");
   let user_id = "";
@@ -102,15 +101,3 @@ function submitPost(e) {
   });
   // window.location.reload();
 }
-
-function alertBtn() {
-  alert("!@#!@");
-}
-
-boardForm.addEventListener("click", submitPost(event));
-
-// boardForm.addEventListener("click", alertBtn);
-
-// readPost();
-// console.log(new Date());
-// console.log(new Date().toISOString().split("T")[0]);
