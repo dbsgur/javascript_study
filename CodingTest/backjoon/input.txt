@@ -1,15 +1,3 @@
-14
-push 1
-push 2
-top
-size
-empty
-pop
-pop
-pop
-size
-empty
-pop
-push 3
-empty
-top
+2
+I am happy today
+We want to win the first prize
