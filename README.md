@@ -39,6 +39,16 @@ Math 객체
 
 21 : Date 객체, 정규식
 
+27 : String 객체, Array 생성자 함수, 프로퍼티
+
+28 : 배열 함수
+
+29 : DOM, 동기-비동기
+
+30 : 이벤트 루프와 동시성, 화살표 함수
+
+31 : 프로미스, 제너레이터
+
 ### flask
 
 summary
@@ -56,12 +66,17 @@ small project
   - actor(web scrapping) popular vote
 - boarder
   - today's my city weather use weather API
-  - Sign up + Sign in (암호화는 진행 예정)
-  - Today's Hot News (진행 예정)
-  - CRUD boarder (진행 예정)
+  - Sign up + Sign in
+  - Today's Hot News
+  - CRUD boarder
 
 ### CodingTest
 
 programmers coding test
 
-Lv1, Lv2, Lv3 ...!!
+Lv1, COMPLETE !!
+Lv2, Lv3 ...!!
+
+BAEK-JOON
+
+알고리즘 기초 1/2
